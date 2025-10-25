@@ -172,9 +172,6 @@ function RetroWindow({
 
       {/* Toolbar */}
       <div className="flex items-center gap-2 px-2 py-1 bg-white/70 border-b border-black/10 text-[12px]">
-        <div className="w-3 h-3 bg-black/70" />
-        <div className="w-3 h-3 bg-black/70" />
-        <div className="w-3 h-3 bg-black/70" />
         <div className="text-[11px] ml-2 text-black/70">Address:</div>
         <div className="text-[11px] bg-white border border-black/20 rounded px-2 py-0.5 w-80 truncate">www.about-me.com</div>
       </div>
@@ -398,24 +395,59 @@ export default function App() {
                     <li>Programming for performance</li>
                     <li>Linear algebra</li>
                     <li>Electronic circuits</li>
+                    <li>Numerical Methods</li>
+                    <li>Linear Circuits</li>
                   </ul>
                 </div>
               </div>
 
               <div className="p-6">
-                <h2 className="text-2xl font-extrabold text-[#6c5ce7]">WORK EXPERIENCE</h2>
-                {[1,2].map((i) => (
-                  <div key={i} className="mt-6">
-                    <a className="text-sm font-semibold text-[#6c5ce7] underline" href="#">Machine Learning / Data Analytics Specialist</a>
-                    <div className="text-xs text-black/60 font-mono">Advanced Micro Devices (AMD) [May 2023 - Aug 2023]</div>
-                    <div className="mt-2 text-sm font-semibold">Python | React | TensorFlow | JavaScript | Angular | Neural Networks | PowerBI</div>
+                <h2 className="text-2xl font-extrabold text-[#6c5ce7] underline">WORK EXPERIENCE</h2>
+                {/* {[1,2].map((i) => ( */}
+                  <div className="mt-6">
+                    <a className="text-lg font-semibold text-[#6c5ce7]" href="#">Software System Designer</a>
+                    <div className="text-base text-black/60 font-mono">AMD [June 2024 - Present]</div>
+                    {/* <div className="mt-2 text-sm font-semibold">Python | React | TensorFlow | JavaScript | Angular | Neural Networks | PowerBI</div> */}
                     <ul className="list-disc ml-5 text-sm text-black/80 mt-2 space-y-1">
-                      <li>Built dashboards and ML pipelines improving insight latency.</li>
-                      <li>Collaborated across design and backend teams.</li>
-                      <li>Presented findings to stakeholders and leadership.</li>
+                      <li>Built an AI-driven test case validation app in Python leveraging OpenAI, enabling automated detection of amibiguous test steps and reducing delivery cycle time by 25%</li>
+                      <li>Designed scalable data pipelines and dashboards using SQL and PowerBI that provided actionable insights across teams, including an AI adoption tracker now used company-wide by leadership</li>
+                      <li>Architected and executed the migration from SQL Server to Snowflake, achieving 80% faster query performance and enabling scalable, cloud-native analytics and reporting</li>
                     </ul>
                   </div>
-                ))}
+
+                  <div className="mt-6">
+                    <a className="text-lg font-semibold text-[#6c5ce7]" href="#">Machine Learning / Data Analytics Specialist</a>
+                    <div className="text-base text-black/60 font-mono">AMD [May 2023 - Aug 2023]</div>
+                    {/* <div className="mt-2 text-sm font-semibold">Python | React | TensorFlow | JavaScript | Angular | Neural Networks | PowerBI</div> */}
+                    <ul className="list-disc ml-5 text-sm text-black/80 mt-2 space-y-1">
+                      <li>Developed a Python NLP model leveraging semantic embeddings and cosine similarity to identify similar projects from textual descriptions, improving cross-team visibility and knowledge sharing</li>
+                      <li>Engineered a dynamic Angular front-end for a company-wide AI Portal, centralizing access to course materials, Q&A, and AI events for improved user engament</li>
+                      <li>Unified release data into an interactive PowerBI report, accelerating the executive decision-making process by an average of 25%</li>
+                    </ul>
+                  </div>
+
+                  <div className="mt-6">
+                    <a className="text-lg font-semibold text-[#6c5ce7]" href="#">Software Developer Analyst</a>
+                    <div className="text-base text-black/60 font-mono">BMO [Jan 2023 - Apr 2023]</div>
+                    {/* <div className="mt-2 text-sm font-semibold">Python | React | TensorFlow | JavaScript | Angular | Neural Networks | PowerBI</div> */}
+                    <ul className="list-disc ml-5 text-sm text-black/80 mt-2 space-y-1">
+                      <li>Revamped existing React app using Redux to track overtime hours worked, enabling resource balancing for 3,000+ employees</li>
+                      <li>Automated financial trend reporting in PowerBI, boosting efficiency by 40% which improved productivity, user experience, and simplified processes accross the financial department</li>
+                      <li>Delivered technical support and business analysis the Business & Clients Analytics team, enabling data driven models and insights that guided critical strategic decisions</li>
+                    </ul>
+                  </div>
+
+                  <div className="mt-6">
+                    <a className="text-lg font-semibold text-[#6c5ce7]" href="#">Web Developer</a>
+                    <div className="text-base text-black/60 font-mono">AMD [Sept 2021 - Apr 2022]</div>
+                    {/* <div className="mt-2 text-sm font-semibold">Python | React | TensorFlow | JavaScript | Angular | Neural Networks | PowerBI</div> */}
+                    <ul className="list-disc ml-5 text-sm text-black/80 mt-2 space-y-1">
+                      <li>Engineered an automated ticketing app with JavaScript, React, and C#, enabling self-sevice defect categorization and reducing manual effort by 98%</li>
+                      <li>Built a modular Python library with OOP to automate the ingestion, cleansing and storage of web server logs into a SQL relational database, supporting large-scale trend detection and analytics</li>
+                      <li>Developed a Python/Flask validation tool to process CSV inputs, detect errors and render results in an interactive UI, decreasing validation time by 94%</li>
+                    </ul>
+                  </div>
+                {/* ))} */}
               </div>
             </div>
           </RetroWindow>
@@ -460,7 +492,7 @@ export default function App() {
       </div>
 
       <div className="absolute bottom-2 left-1/2 -translate-x-1/2 px-3 py-1 text-xs bg-white/70 rounded shadow font-mono">
-        Tip: Drag by the top bar. Resize from any edge/corner. Click × to close; use the left icons to reopen.
+        Tip: Drag by the top bar. Click × to close; use the left icons to reopen.
       </div>
     </div>
   );
