@@ -1,5 +1,21 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import profilePic from "./assets/SHA_3678.JPG";
+import starIcon from "./assets/ms_paint_icons/ms_paint_star.png";
+import dottedRectangleIcon from "./assets/ms_paint_icons/ms_paint_dotted_rectangle.png";
+import bluePencilIcon from "./assets/ms_paint_icons/ms_paint_blue_pencil.png";
+import eraserIcon from "./assets/ms_paint_icons/ms_paint_eraser.png"
+import bucketIcon from "./assets/ms_paint_icons/ms_paint_bucket.png"
+import eyeDropperIcon from "./assets/ms_paint_icons/ms_paint_eyedropper.png"
+import magnifyingGlassIcon from "./assets/ms_paint_icons/ms_paint_magnifying_glass.png"
+import yellowPencilIcon from "./assets/ms_paint_icons/ms_paint_yellow_pencil.png"
+import brushIcon from "./assets/ms_paint_icons/ms_paint_brush.png"
+import letterIcon from "./assets/ms_paint_icons/ms_paint_letter.png"
+import lineIcon from "./assets/ms_paint_icons/ms_paint_line.png"
+import curvedLineIcon from "./assets/ms_paint_icons/ms_paint_curved_line.png"
+import rectangleIcon from "./assets/ms_paint_icons/ms_paint_rectangle.png"
+import polygonIcon from "./assets/ms_paint_icons/ms_paint_polygon.png"
+import ovalIcon from "./assets/ms_paint_icons/ms_paint_oval.png"
+import roundedRectangleIcon from "./assets/ms_paint_icons/ms_paint_rounded_rectangle.png"
 /**
  * DROP-IN APP.JSX (Vite + React, Tailwind v3/v4)
  * - Draggable + resizable windows (all edges/corners)
@@ -11,8 +27,27 @@ import profilePic from "./assets/SHA_3678.JPG";
  */
 
 // ---------- CONFIG: tweak these to your liking ----------
+const ms_paint_icons = [
+  starIcon,
+  dottedRectangleIcon,
+  eraserIcon,
+  bucketIcon,
+  eyeDropperIcon,
+  magnifyingGlassIcon,
+  yellowPencilIcon,
+  brushIcon,
+  bluePencilIcon,
+  letterIcon,
+  lineIcon,
+  curvedLineIcon,
+  rectangleIcon,
+  polygonIcon,
+  ovalIcon,
+  roundedRectangleIcon
+]
+
 const DEFAULT_SIZES = {
-  profile: { w: 900, h: 520 },
+  profile: { w: 1000, h: 700 },
   experience: { w: 1000, h: 700 },
   paint: { w: 500, h: 520 },
 };
@@ -24,8 +59,8 @@ const MIN_SIZES = {
 };
 
 const DEFAULT_POSITIONS = {
-  profile: { x: 120, y: 40 },
-  experience: { x: 40, y: 120 },
+  profile: { x: 40, y: 120 },
+  experience: { x: 100, y: 120 },
   paint: { x: 540, y: 100 }, // will be moved to the right of profile on mount
 };
 // --------------------------------------------------------
@@ -234,6 +269,16 @@ export default function App() {
   const close = (id) => setOpen((o) => ({ ...o, [id]: false }));
   const reopen = (id) => { setOpen((o) => ({ ...o, [id]: true })); focus(id); };
 
+  const colors = [
+    "#000000ff", "#585858ff", "#5c0101ff", "#535c01ff",
+    "#006100ff", "#020079ff", "#53005eff", "#969900ff",
+    "#003010ff", "#39a1e6ff", "#007767ff", "#30227eff",
+    "#664b00ff", "#9B5DE5", "#ffffffff", "#c5c5c5ff", "#c50000ff", 
+    "#fffb28ff", "#00f715ff", "#00f7ebff", "#0019f7ff", "#ce00f7ff", 
+    "#fffd96ff", "#96ff9fff", "#7bf6ffff", "#cea3ffff", "#f70090ff", 
+    "#f79400ff"
+  ];
+
   // One-time layout: place "paint" to the right of "profile" on mount
   useEffect(() => {
     const gutter = 24;
@@ -326,41 +371,114 @@ export default function App() {
             setSize={setSize}
             minSize={MIN_SIZES.profile}
           >
-            <div className="grid grid-cols-[1.2fr_1fr] h-full">
-              <div className="p-6">
-                <div className="text-2xl font-bold">Sarah Shakim</div>
-                <div className="mt-2 text-black/70 space-y-1 text-sm">
-                  <div>📞 (647) 772 – 7216</div>
-                  <div>✉️ sarahshakim@gmail.com</div>
-                  <div>📍 Toronto, ON</div>
+            <div className="h-full flex flex-col bg-white">
+            {/* ORANGE STRIP */}
+            <div className="bg-[#f6a57c] border-b-4 border-[#e49872]">
+              <div className="grid grid-cols-[0.8fr_1.1fr_1fr] gap-6 p-6">
+
+                {/* CONTACT (left) */}
+                <div className="bg-[#f6a57c]">
+                  <div className="text-3xl font-extrabold leading-none">Sarah<br/>Shakim</div>
+
+                  <div className="mt-4 space-y-3 text-sm text-black">
+                    <div className="flex items-center gap-3">
+                      <span className="text-lg">📱</span>
+                      <span>(647) 772 - 7216</span>
+                    </div>
+                    <div className="flex items-center gap-3">
+                      <span className="text-lg">✉️</span>
+                      <span>sarahshakim@gmail.com</span>
+                    </div>
+                    <div className="flex items-center gap-3">
+                      <span className="text-lg">📍</span>
+                      <span>Toronto, ON</span>
+                    </div>
+                  </div>
                 </div>
 
-                <div className="mt-6">
-                  <h3 className="text-xl font-extrabold underline decoration-[#6c5ce7]">SKILLS</h3>
-                  <div className="grid grid-cols-5 gap-3 mt-3 text-xs">
-                    {["Angular","React","HTML5","CSS3","JavaScript","Flask","XML","TypeScript","Python","C#","Rust","SQL","MATLAB","Powershell","NodeJS","VS Code","Linux","Git","npm","GitHub","PowerBI","ASP.NET"].map((s) => (
-                      <div key={s} className="px-2 py-1 rounded border text-center bg-white">{s}</div>
-                    ))}
+                {/* ABOUT (middle) */}
+                <div className="bg-[#f6a57c]">
+                  <p className="text-[13px] leading-6 text-black">
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse tempor erat et urna
+                    rhoncus, sed venenatis lectus gravida. Sed dictum mi ex, id vestibulum orci lacinia eu.
+                    Maecenas in est tortor. Pellentesque habitant morbi tristique senectus et netus.
+                  </p>
+                </div>
+
+                {/* EDUCATION (right) */}
+                <div className="bg-[#a7e9cf] border-2 border-[#3fbf8f] rounded-md p-4">
+                  <div className="text-2xl font-extrabold text-[#6b21a8] underline decoration-4">
+                    EDUCATION
+                  </div>
+
+                  <div className="mt-4 grid grid-cols-[72px_1fr] gap-4 items-start">
+                    {/* year badge */}
+                    <div className="bg-[#fdbb6f] border-2 border-[#f08e39] rounded-md h-28 grid place-items-center">
+                      <div className="flex flex-col items-center font-extrabold text-3xl leading-none text-black">
+                        <span>20</span><span>24</span>
+                      </div>
+                    </div>
+
+                    {/* degree + school */}
+                    <div>
+                      <div className="font-extrabold">Bachelors of<br/>Engineering</div>
+                      <div className="mt-3 font-extrabold">University of<br/>Waterloo</div>
+                    </div>
                   </div>
                 </div>
               </div>
+            </div>
 
-              <div className="p-6 border-l bg-[#fff7f0]">
-                <h3 className="text-lg font-bold text-[#0ea5e9]">EDUCATION</h3>
-                <div className="mt-3 leading-relaxed">
-                  <div className="font-semibold">University of Waterloo</div>
-                  <div>BASc, Computer Engineering</div>
-                  <div>2020 – 2025</div>
+            {/* Bottom: SKILLS (full width) */}
+            <div className="p-6 grow">
+              <h3 className="text-3xl font-extrabold text-[#6b21a8] underline decoration-4 mb-4">
+                SKILLS
+              </h3>
+
+              {/* Front end */}
+              <div className="grid grid-cols-[110px_1fr] gap-4 mb-6">
+                <div className="text-[#6b21a8] font-extrabold">Front<br/>end:</div>
+                <div className="flex flex-wrap gap-x-8 gap-y-5 text-sm">
+                  <div className="flex items-center gap-2"><span>🅰️</span>Angular</div>
+                  <div className="flex items-center gap-2"><span>⚛️</span>React</div>
+                  <div className="flex items-center gap-2"><span>🔶</span>HTML5</div>
+                  <div className="flex items-center gap-2"><span>🎨</span>CSS3</div>
+                  <div className="flex items-center gap-2"><span>🟨</span>JavaScript</div>
+                  <div className="flex items-center gap-2"><span>🐍</span>Flask</div>
+                  <div className="flex items-center gap-2"><span>📄</span>XML</div>
+                  <div className="flex items-center gap-2"><span>🟦</span>TypeScript</div>
                 </div>
-                <div className="mt-6">
-                  <h4 className="font-semibold">About me</h4>
-                  <p className="text-black/70 mt-1">
-                    I love building playful, performant UIs and exploring ML/analytics.
-                    This site mimics a cozy retro desktop—click icons on the left to reopen any windows you close.
-                  </p>
+              </div>
+
+              {/* Back end */}
+              <div className="grid grid-cols-[110px_1fr] gap-4 mb-6">
+                <div className="text-[#6b21a8] font-extrabold">Back<br/>end:</div>
+                <div className="flex flex-wrap gap-x-8 gap-y-5 text-sm">
+                  <div className="flex items-center gap-2"><span>🐍</span>Python</div>
+                  <div className="flex items-center gap-2"><span>♯</span>C#</div>
+                  <div className="flex items-center gap-2"><span>🦀</span>Rust</div>
+                  <div className="flex items-center gap-2"><span>🗃️</span>SQL</div>
+                  <div className="flex items-center gap-2"><span>📊</span>MATLAB</div>
+                  <div className="flex items-center gap-2"><span>💠</span>Powershell</div>
+                  <div className="flex items-center gap-2"><span>🟩</span>NodeJS</div>
+                </div>
+              </div>
+
+              {/* Tools */}
+              <div className="grid grid-cols-[110px_1fr] gap-4">
+                <div className="text-[#6b21a8] font-extrabold">Tools:</div>
+                <div className="flex flex-wrap gap-x-8 gap-y-5 text-sm">
+                  <div className="flex items-center gap-2"><span>🧰</span>VS Code</div>
+                  <div className="flex items-center gap-2"><span>🐧</span>Linux</div>
+                  <div className="flex items-center gap-2"><span>🔺</span>Git</div>
+                  <div className="flex items-center gap-2"><span>📦</span>npm</div>
+                  <div className="flex items-center gap-2"><span>🐙</span>GitHub</div>
+                  <div className="flex items-center gap-2"><span>📈</span>PowerBI</div>
+                  <div className="flex items-center gap-2"><span>🟦</span>ASP.NET</div>
                 </div>
               </div>
             </div>
+          </div>
           </RetroWindow>
 
           {/* EXPERIENCE WINDOW */}
@@ -466,21 +584,34 @@ export default function App() {
             setSize={setSize}
             minSize={MIN_SIZES.paint}
           >
-            <div className="h-full grid grid-cols-[180px_1fr]">
-              <div className="p-3 bg-[#f5f5f5] border-r">
-                <div className="grid grid-cols-3 gap-2">
-                  {Array.from({ length: 15 }).map((_, i) => (
-                    <div key={i} className="h-8 bg-white border" />
+            <div className="h-full grid grid-cols-[100px_1fr]">
+              <div className="p-3 bg-[#c0c0c07a] border-r">
+                <div className="grid grid-cols-2 gap-1">
+                  {Array.from({ length: 16 }).map((_, i) => (
+                    <div key={i} className="h-8 bg-white border flex items-center justify-center">
+                        <img src={ms_paint_icons[i % ms_paint_icons.length]} alt={`icon-${i}`} className="h-7 w-8 object-contain"></img>
+                    </div>
                   ))}
                 </div>
               </div>
-              <div className="relative bg-[#fff] grid place-items-center">
-                <div className="w-72 h-80 bg-gradient-to-b from-[#fff] to-[#f0f0f0] border grid place-items-center">
-                  <img src={profilePic} alt="Profile" className="w-72 h-79 object-cover border" />
+              <div className="relative bg-[#c0c0c07a] grid place-items-center">
+                <div className="w-72 h-90 mb-15 bg-gradient-to-b from-[#fff] to-[#f0f0f0] border grid place-items-center">
+                  <img src={profilePic} alt="Profile" className="w-72 h-90 object-cover border" />
                 </div>
-                <div className="absolute bottom-2 left-0 right-0 mx-3 h-8 bg-white border grid grid-cols-14 gap-1 px-2 items-center">
+                <div className="absolute bottom-2 left-0 right-0 mx-3 h-14 bg-[#c0c0c07a] border grid grid-cols-14 gap-1 px-2 items-center">
                   {Array.from({ length: 14 }).map((_, i) => (
-                    <div key={i} className="h-5 border" />
+                    <div 
+                      key={i} 
+                      className="h-5 border" 
+                      style={{ backgroundColor: colors[i % colors.length] }}
+                    />
+                  ))}
+                  {Array.from({ length: 14 }).map((_, i) => (
+                    <div 
+                      key={i} 
+                      className="h-5 border" 
+                      style={{ backgroundColor: colors[i % colors.length + 14] }}
+                    />
                   ))}
                 </div>
               </div>
