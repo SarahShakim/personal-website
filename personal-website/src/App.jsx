@@ -16,6 +16,7 @@ import rectangleIcon from "./assets/ms_paint_icons/ms_paint_rectangle.png"
 import polygonIcon from "./assets/ms_paint_icons/ms_paint_polygon.png"
 import ovalIcon from "./assets/ms_paint_icons/ms_paint_oval.png"
 import roundedRectangleIcon from "./assets/ms_paint_icons/ms_paint_rounded_rectangle.png"
+import ApplicationIcon from "./ApplicationIcon";
 /**
  * DROP-IN APP.JSX (Vite + React, Tailwind v3/v4)
  * - Draggable + resizable windows (all edges/corners)
@@ -234,18 +235,6 @@ function RetroWindow({
   );
 }
 
-function SidebarIcon({ label, onClick }) {
-  return (
-    <button
-      onClick={onClick}
-      className="flex flex-col items-center gap-2 p-2 rounded-md hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-white/50 font-mono"
-    >
-      <div className="w-14 h-14 rounded-md bg-white/30 border border-white/40" />
-      <div className="text-white/90 text-xs">{label}</div>
-    </button>
-  );
-}
-
 export default function App() {
   const [open, setOpen] = useState({ profile: true, paint: true });
 
@@ -349,12 +338,12 @@ export default function App() {
         {/* Sidebar */}
         <div className="flex flex-col justify-between items-center py-6">
           <div className="flex flex-col gap-6">
-            <SidebarIcon label="Projects" onClick={() => reopen("profile")} />
-            <SidebarIcon label="Sarah's Profile" onClick={() => reopen("profile")} />
+            <ApplicationIcon label="Projects" onClick={() => reopen("profile")} />
+            <ApplicationIcon label="Sarah's Profile" onClick={() => reopen("profile")} />
           </div>
           <div className="flex flex-col gap-6">
-            <SidebarIcon label="Sudoku" onClick={() => reopen("profile")} />
-            <SidebarIcon label="Profile pic" onClick={() => reopen("paint")} />
+            <ApplicationIcon label="Sudoku" onClick={() => reopen("profile")} />
+            <ApplicationIcon label="Profile pic" onClick={() => reopen("paint")} />
           </div>
         </div>
 
