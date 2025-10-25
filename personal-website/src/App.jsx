@@ -48,19 +48,19 @@ const ms_paint_icons = [
 
 const DEFAULT_SIZES = {
   profile: { w: 1000, h: 700 },
-  experience: { w: 1000, h: 700 },
+  // experience: { w: 1000, h: 700 },
   paint: { w: 500, h: 520 },
 };
 
 const MIN_SIZES = {
   profile: { w: 520, h: 320 },
-  experience: { w: 520, h: 320 },
+  // experience: { w: 520, h: 320 },
   paint: { w: 480, h: 320 },
 };
 
 const DEFAULT_POSITIONS = {
   profile: { x: 40, y: 120 },
-  experience: { x: 100, y: 120 },
+  // experience: { x: 100, y: 120 },
   paint: { x: 540, y: 100 }, // will be moved to the right of profile on mount
 };
 // --------------------------------------------------------
@@ -244,7 +244,7 @@ function SidebarIcon({ label, onClick }) {
 }
 
 export default function App() {
-  const [open, setOpen] = useState({ profile: true, experience: true, paint: true });
+  const [open, setOpen] = useState({ profile: true, paint: true });
 
   // positions per window
   const [positions, setPositions] = useState({ ...DEFAULT_POSITIONS });
@@ -259,7 +259,7 @@ export default function App() {
   useEffect(() => { sizesRef.current = sizes; }, [sizes]);
 
   // bring-to-front ordering
-  const [order, setOrder] = useState(["profile", "paint", "experience"]);
+  const [order, setOrder] = useState(["profile", "paint"]);
   const zIndexMap = useMemo(() => {
     const base = 10;
     return order.reduce((acc, id, i) => ({ ...acc, [id]: base + i }), {});
@@ -350,7 +350,7 @@ export default function App() {
             <SidebarIcon label="Sarah's Profile" onClick={() => reopen("profile")} />
           </div>
           <div className="flex flex-col gap-6">
-            <SidebarIcon label="Sudoku" onClick={() => reopen("experience")} />
+            <SidebarIcon label="Sudoku" onClick={() => reopen("profile")} />
             <SidebarIcon label="Profile pic" onClick={() => reopen("paint")} />
           </div>
         </div>
@@ -373,11 +373,11 @@ export default function App() {
           >
             <div className="h-full flex flex-col bg-white">
             {/* ORANGE STRIP */}
-            <div className="bg-[#f6a57c] border-b-4 border-[#e49872]">
+            <div className="bg-[#f7c2a7]">
               <div className="grid grid-cols-[0.8fr_1.1fr_1fr] gap-6 p-6">
 
                 {/* CONTACT (left) */}
-                <div className="bg-[#f6a57c]">
+                <div className="bg-[#f7c2a7]">
                   <div className="text-3xl font-extrabold leading-none">Sarah<br/>Shakim</div>
 
                   <div className="mt-4 space-y-3 text-sm text-black">
@@ -397,7 +397,7 @@ export default function App() {
                 </div>
 
                 {/* ABOUT (middle) */}
-                <div className="bg-[#f6a57c]">
+                <div className="bg-[#f7c2a7]">
                   <p className="text-[13px] leading-6 text-black">
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse tempor erat et urna
                     rhoncus, sed venenatis lectus gravida. Sed dictum mi ex, id vestibulum orci lacinia eu.
@@ -406,14 +406,14 @@ export default function App() {
                 </div>
 
                 {/* EDUCATION (right) */}
-                <div className="bg-[#a7e9cf] border-2 border-[#3fbf8f] rounded-md p-4">
+                <div className="bg-[#eafaf1] border-2 border-[#72d79e] rounded-md p-4">
                   <div className="text-2xl font-extrabold text-[#6b21a8] underline decoration-4">
                     EDUCATION
                   </div>
 
                   <div className="mt-4 grid grid-cols-[72px_1fr] gap-4 items-start">
                     {/* year badge */}
-                    <div className="bg-[#fdbb6f] border-2 border-[#f08e39] rounded-md h-28 grid place-items-center">
+                    <div className="bg-[#f7c2a7] border-2 border-[#f08e39] rounded-md h-28 grid place-items-center">
                       <div className="flex flex-col items-center font-extrabold text-3xl leading-none text-black">
                         <span>20</span><span>24</span>
                       </div>
@@ -431,14 +431,14 @@ export default function App() {
 
             {/* Bottom: SKILLS (full width) */}
             <div className="p-6 grow">
-              <h3 className="text-3xl font-extrabold text-[#6b21a8] underline decoration-4 mb-4">
+              <h3 className="text-3xl font-extrabold text-[#6c5ce7] underline decoration-4 mb-4">
                 SKILLS
               </h3>
 
               {/* Front end */}
-              <div className="grid grid-cols-[110px_1fr] gap-4 mb-6">
-                <div className="text-[#6b21a8] font-extrabold">Front<br/>end:</div>
-                <div className="flex flex-wrap gap-x-8 gap-y-5 text-sm">
+              <div className="grid grid-cols-[110px_1fr] gap-4 mb-6 text-base">
+                <div className="text-[#6c5ce7] font-extrabold">Front-end:</div>
+                <div className="flex flex-wrap gap-x-8 gap-y-5">
                   <div className="flex items-center gap-2"><span>🅰️</span>Angular</div>
                   <div className="flex items-center gap-2"><span>⚛️</span>React</div>
                   <div className="flex items-center gap-2"><span>🔶</span>HTML5</div>
@@ -451,9 +451,9 @@ export default function App() {
               </div>
 
               {/* Back end */}
-              <div className="grid grid-cols-[110px_1fr] gap-4 mb-6">
-                <div className="text-[#6b21a8] font-extrabold">Back<br/>end:</div>
-                <div className="flex flex-wrap gap-x-8 gap-y-5 text-sm">
+              <div className="grid grid-cols-[110px_1fr] gap-4 mb-6 text-base">
+                <div className="text-[#6c5ce7] font-extrabold">Backend:</div>
+                <div className="flex flex-wrap gap-x-8 gap-y-5">
                   <div className="flex items-center gap-2"><span>🐍</span>Python</div>
                   <div className="flex items-center gap-2"><span>♯</span>C#</div>
                   <div className="flex items-center gap-2"><span>🦀</span>Rust</div>
@@ -465,9 +465,9 @@ export default function App() {
               </div>
 
               {/* Tools */}
-              <div className="grid grid-cols-[110px_1fr] gap-4">
-                <div className="text-[#6b21a8] font-extrabold">Tools:</div>
-                <div className="flex flex-wrap gap-x-8 gap-y-5 text-sm">
+              <div className="grid grid-cols-[110px_1fr] gap-4 text-base">
+                <div className="text-[#6c5ce7] font-extrabold">Tools:</div>
+                <div className="flex flex-wrap gap-x-8 gap-y-5">
                   <div className="flex items-center gap-2"><span>🧰</span>VS Code</div>
                   <div className="flex items-center gap-2"><span>🐧</span>Linux</div>
                   <div className="flex items-center gap-2"><span>🔺</span>Git</div>
@@ -478,25 +478,9 @@ export default function App() {
                 </div>
               </div>
             </div>
-          </div>
-          </RetroWindow>
 
-          {/* EXPERIENCE WINDOW */}
-          <RetroWindow
-            id="experience"
-            title="Sarah's Profile • Internet"
-            isOpen={open.experience}
-            onClose={() => close("experience")}
-            onFocus={focus}
-            z={zIndexMap.experience || 11}
-            pos={positions.experience}
-            setPos={setPos}
-            size={sizes.experience}
-            setSize={setSize}
-            minSize={MIN_SIZES.experience}
-          >
-            <div className="h-full grid grid-cols-[320px_1fr]">
-              <div className="p-5 bg-[#eafaf1] border-r">
+            <div className="h-full grid grid-cols-[320px_1fr] mt-4">
+              <div className="p-5 bg-[#eafaf1] border-r border-t">
                 <div className="bg-white/70 p-4 rounded-lg border">
                   <h3 className="text-xl font-extrabold">Hobbies & Interests</h3>
                   <ul className="list-disc ml-5 mt-3 space-y-1">
@@ -519,7 +503,7 @@ export default function App() {
                 </div>
               </div>
 
-              <div className="p-6">
+              <div className="p-6 border-t">
                 <h2 className="text-2xl font-extrabold text-[#6c5ce7] underline">WORK EXPERIENCE</h2>
                 {/* {[1,2].map((i) => ( */}
                   <div className="mt-6">
@@ -568,7 +552,10 @@ export default function App() {
                 {/* ))} */}
               </div>
             </div>
+          </div>
           </RetroWindow>
+
+          
 
           {/* PAINT WINDOW */}
           <RetroWindow
