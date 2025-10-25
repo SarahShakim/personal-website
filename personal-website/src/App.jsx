@@ -87,6 +87,7 @@ function RetroWindow({
   size,
   setSize,
   minSize,
+  hasToolbar
 }) {
   const dragRef = useRef({ dragging: false, startX: 0, startY: 0, baseX: 0, baseY: 0 });
   const resizeRef = useRef({
@@ -206,13 +207,15 @@ function RetroWindow({
       </div>
 
       {/* Toolbar */}
-      <div className="flex items-center gap-2 px-2 py-1 bg-white/70 border-b border-black/10 text-[12px]">
-        <div className="text-[11px] ml-2 text-black/70">Address:</div>
-        <div className="text-[11px] bg-white border border-black/20 rounded px-2 py-0.5 w-80 truncate">www.about-me.com</div>
-      </div>
+      {hasToolbar ?
+        <div className="flex items-center gap-2 px-2 py-1 bg-white/70 border-b border-black/10 text-[12px]">
+          <div className="text-[11px] ml-2 text-black/70">Address:</div>
+          <div className="text-[11px] bg-white border border-black/20 rounded px-2 py-0.5 w-80 truncate">www.about-me.com</div>
+        </div> : <div></div>
+      }
 
       {/* Content & resizers */}
-      <div className="relative w-full h-[calc(100%-52px)] overflow-auto bg-white text-[13px] leading-relaxed">
+      <div className="relative w-full h-[calc(100%-28px)] overflow-auto bg-white text-[13px] leading-relaxed">
         {children}
 
         {RESIZABLE && (<>{/* Edge handles */}
@@ -370,6 +373,7 @@ export default function App() {
             size={sizes.profile}
             setSize={setSize}
             minSize={MIN_SIZES.profile}
+            hasToolbar={true}
           >
             <div className="h-full flex flex-col bg-white">
             {/* ORANGE STRIP */}
@@ -555,8 +559,6 @@ export default function App() {
           </div>
           </RetroWindow>
 
-          
-
           {/* PAINT WINDOW */}
           <RetroWindow
             id="paint"
@@ -570,6 +572,7 @@ export default function App() {
             size={sizes.paint}
             setSize={setSize}
             minSize={MIN_SIZES.paint}
+            hasToolbar={false}
           >
             <div className="h-full grid grid-cols-[100px_1fr]">
               <div className="p-3 bg-[#c0c0c07a] border-r">
