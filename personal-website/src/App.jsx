@@ -18,6 +18,7 @@ import ovalIcon from "./assets/ms_paint_icons/ms_paint_oval.png"
 import roundedRectangleIcon from "./assets/ms_paint_icons/ms_paint_rounded_rectangle.png"
 import ApplicationIcon from "./ApplicationIcon";
 import RetroWindow from "./RetroWindow";
+import TipBar from "./TipBar";
 /**
  * DROP-IN APP.JSX (Vite + React, Tailwind v3/v4)
  * - Draggable + resizable windows (all edges/corners)
@@ -50,19 +51,16 @@ const ms_paint_icons = [
 
 const DEFAULT_SIZES = {
     profile: { w: 1000, h: 700 },
-    // experience: { w: 1000, h: 700 },
     paint: { w: 500, h: 520 },
 };
 
 const MIN_SIZES = {
     profile: { w: 520, h: 320 },
-    // experience: { w: 520, h: 320 },
     paint: { w: 480, h: 320 },
 };
 
 const DEFAULT_POSITIONS = {
     profile: { x: 40, y: 120 },
-    // experience: { x: 100, y: 120 },
     paint: { x: 540, y: 100 }, // will be moved to the right of profile on mount
 };
 // --------------------------------------------------------
@@ -437,10 +435,8 @@ export default function App() {
 
             <div />
         </div>
-
-        <div className="absolute bottom-2 left-1/2 -translate-x-1/2 px-3 py-1 text-xs bg-white/70 rounded shadow font-mono">
-            Tip: Drag by the top bar. Click × to close; use the left icons to reopen.
-        </div>
+        
+        <TipBar />
         </div>
     );
 }
