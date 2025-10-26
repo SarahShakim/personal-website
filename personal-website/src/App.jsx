@@ -23,6 +23,7 @@ import FileApp from "./assets/application_icons/file_app.png"
 import WorldApp from "./assets/application_icons/world_app.png"
 import ArcadeApp from "./assets/application_icons/arcade_app.png"
 import ProfileApp from "./assets/application_icons/profile_app.png"
+import PersonalCards from "./PersonalCards";
 /**
  * DROP-IN APP.JSX (Vite + React, Tailwind v3/v4)
  * - Draggable + resizable windows (all edges/corners)
@@ -110,6 +111,21 @@ export default function App() {
         "#f79400ff"
     ];
 
+    const hobbies = [
+        "Avid Gamer", 
+        "Hackathons", 
+        "Experimenting with new tech", 
+        "Baking"
+    ]
+
+    const relevantCourses = [
+        "Data structures & algorithms",
+        "Programming for performance",
+        "Linear algebra",
+        "Electronic circuits",
+        "Numerical Methods",
+        "Linear Circuits"
+    ]
     // One-time layout: place "paint" to the right of "profile" on mount
     useEffect(() => {
         const gutter = 24;
@@ -313,26 +329,8 @@ export default function App() {
 
                 <div className="h-full grid grid-cols-[320px_1fr] mt-4">
                 <div className="p-5 bg-[#eafaf1] border-r border-t">
-                    <div className="bg-white/70 p-4 rounded-lg border">
-                    <h3 className="text-xl font-extrabold">Hobbies & Interests</h3>
-                    <ul className="list-disc ml-5 mt-3 space-y-1">
-                        <li>Avid Gamer</li>
-                        <li>Hackathons</li>
-                        <li>Experimenting with new tech</li>
-                        <li>Baking</li>
-                    </ul>
-                    </div>
-                    <div className="bg-white/70 p-4 rounded-lg border mt-6">
-                    <h3 className="text-xl font-extrabold">Relevant Courses</h3>
-                    <ul className="list-disc ml-5 mt-3 space-y-1">
-                        <li>Data structures & algorithms</li>
-                        <li>Programming for performance</li>
-                        <li>Linear algebra</li>
-                        <li>Electronic circuits</li>
-                        <li>Numerical Methods</li>
-                        <li>Linear Circuits</li>
-                    </ul>
-                    </div>
+                    <PersonalCards title="Hobbies & Interests" listItems={hobbies}/>
+                    <PersonalCards title="Relevant Courses" listItems={relevantCourses} additionalCard={true}/>
                 </div>
 
                 <div className="p-6 border-t">
