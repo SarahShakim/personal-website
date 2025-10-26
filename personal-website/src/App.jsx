@@ -24,6 +24,7 @@ import WorldApp from "./assets/application_icons/world_app.png"
 import ArcadeApp from "./assets/application_icons/arcade_app.png"
 import ProfileApp from "./assets/application_icons/profile_app.png"
 import PersonalCards from "./PersonalCards";
+import WorkExperience from "./WorkExperience";
 /**
  * DROP-IN APP.JSX (Vite + React, Tailwind v3/v4)
  * - Draggable + resizable windows (all edges/corners)
@@ -333,48 +334,8 @@ export default function App() {
                     <PersonalCards title="Relevant Courses" listItems={relevantCourses} additionalCard={true}/>
                 </div>
 
-                <div className="p-6 border-t">
-                    <h2 className="text-2xl font-extrabold text-[#6c5ce7] underline">WORK EXPERIENCE</h2>
-                    <div className="mt-6">
-                        <a className="text-lg font-semibold text-[#6c5ce7]" href="#">Software System Designer</a>
-                        <div className="text-base text-black/60 font-mono">AMD [June 2024 - Present]</div>
-                        <ul className="list-disc ml-5 text-sm text-black/80 mt-2 space-y-1">
-                        <li>Built an AI-driven test case validation app in Python leveraging OpenAI, enabling automated detection of amibiguous test steps and reducing delivery cycle time by 25%</li>
-                        <li>Designed scalable data pipelines and dashboards using SQL and PowerBI that provided actionable insights across teams, including an AI adoption tracker now used company-wide by leadership</li>
-                        <li>Architected and executed the migration from SQL Server to Snowflake, achieving 80% faster query performance and enabling scalable, cloud-native analytics and reporting</li>
-                        </ul>
-                    </div>
-
-                    <div className="mt-6">
-                        <a className="text-lg font-semibold text-[#6c5ce7]" href="#">Machine Learning / Data Analytics Specialist</a>
-                        <div className="text-base text-black/60 font-mono">AMD [May 2023 - Aug 2023]</div>
-                        <ul className="list-disc ml-5 text-sm text-black/80 mt-2 space-y-1">
-                        <li>Developed a Python NLP model leveraging semantic embeddings and cosine similarity to identify similar projects from textual descriptions, improving cross-team visibility and knowledge sharing</li>
-                        <li>Engineered a dynamic Angular front-end for a company-wide AI Portal, centralizing access to course materials, Q&A, and AI events for improved user engament</li>
-                        <li>Unified release data into an interactive PowerBI report, accelerating the executive decision-making process by an average of 25%</li>
-                        </ul>
-                    </div>
-
-                    <div className="mt-6">
-                        <a className="text-lg font-semibold text-[#6c5ce7]" href="#">Software Developer Analyst</a>
-                        <div className="text-base text-black/60 font-mono">BMO [Jan 2023 - Apr 2023]</div>
-                        <ul className="list-disc ml-5 text-sm text-black/80 mt-2 space-y-1">
-                        <li>Revamped existing React app using Redux to track overtime hours worked, enabling resource balancing for 3,000+ employees</li>
-                        <li>Automated financial trend reporting in PowerBI, boosting efficiency by 40% which improved productivity, user experience, and simplified processes accross the financial department</li>
-                        <li>Delivered technical support and business analysis the Business & Clients Analytics team, enabling data driven models and insights that guided critical strategic decisions</li>
-                        </ul>
-                    </div>
-
-                    <div className="mt-6">
-                        <a className="text-lg font-semibold text-[#6c5ce7]" href="#">Web Developer</a>
-                        <div className="text-base text-black/60 font-mono">AMD [Sept 2021 - Apr 2022]</div>
-                        <ul className="list-disc ml-5 text-sm text-black/80 mt-2 space-y-1">
-                        <li>Engineered an automated ticketing app with JavaScript, React, and C#, enabling self-sevice defect categorization and reducing manual effort by 98%</li>
-                        <li>Built a modular Python library with OOP to automate the ingestion, cleansing and storage of web server logs into a SQL relational database, supporting large-scale trend detection and analytics</li>
-                        <li>Developed a Python/Flask validation tool to process CSV inputs, detect errors and render results in an interactive UI, decreasing validation time by 94%</li>
-                        </ul>
-                    </div>
-                </div>
+                <WorkExperience />
+                
                 </div>
             </div>
             </RetroWindow>
