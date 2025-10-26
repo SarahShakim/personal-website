@@ -67,9 +67,6 @@ const DEFAULT_POSITIONS = {
 };
 // --------------------------------------------------------
 
-// Toggle global resizing behavior for all windows
-const RESIZABLE = false;
-
 // Helper to clamp numbers
 function clamp(v, lo, hi) {
   return Math.max(lo, Math.min(hi, v));

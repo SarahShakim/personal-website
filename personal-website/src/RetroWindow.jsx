@@ -15,7 +15,6 @@ export default function RetroWindow({
     minSize,
     hasToolbar
 }) {
-    const RESIZABLE = false;
     
     const dragRef = useRef({ dragging: false, startX: 0, startY: 0, baseX: 0, baseY: 0 });
       const resizeRef = useRef({
@@ -94,21 +93,6 @@ export default function RetroWindow({
         };
       };
     
-      const startResize = (edge) => (e) => {
-        e.stopPropagation();
-        onFocus(id);
-        resizeRef.current = {
-          resizing: true,
-          startX: e.clientX,
-          startY: e.clientY,
-          startW: size.w,
-          startH: size.h,
-          startL: pos.x,
-          startT: pos.y,
-          edge,
-        };
-      };
-    
       return (
         <div
           role="dialog"
@@ -146,17 +130,6 @@ export default function RetroWindow({
           <div className="relative w-full h-[calc(100%-28px)] overflow-auto bg-white text-[13px] leading-relaxed">
             {children}
     
-            {RESIZABLE && (<>{/* Edge handles */}
-            <div onMouseDown={startResize("n")} className="absolute top-0 left-2 right-2 h-1.5 cursor-n-resize" />
-            <div onMouseDown={startResize("s")} className="absolute bottom-0 left-2 right-2 h-1.5 cursor-s-resize" />
-            <div onMouseDown={startResize("e")} className="absolute top-2 bottom-2 right-0 w-1.5 cursor-e-resize" />
-            <div onMouseDown={startResize("w")} className="absolute top-2 bottom-2 left-0 w-1.5 cursor-w-resize" />
-            {/* Corner handles */}
-            <div onMouseDown={startResize("ne")} className="absolute -top-0.5 -right-0.5 w-3 h-3 cursor-ne-resize" />
-            <div onMouseDown={startResize("nw")} className="absolute -top-0.5 -left-0.5 w-3 h-3 cursor-nw-resize" />
-            <div onMouseDown={startResize("se")} className="absolute -bottom-0.5 -right-0.5 w-3 h-3 cursor-se-resize" />
-            <div onMouseDown={startResize("sw")} className="absolute -bottom-0.5 -left-0.5 w-3 h-3 cursor-sw-resize" />
-            </>)}
           </div>
         </div>
       );
