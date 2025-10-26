@@ -11,6 +11,7 @@ import PersonalCards from "./PersonalCards";
 import WorkExperience from "./WorkExperience";
 import AngularIcon from "./assets/skills/angular.png"
 import PaintIcons from "./PaintIcons";
+import PaintColors from "./PaintColors";
 /**
  * DROP-IN APP.JSX (Vite + React, Tailwind v3/v4)
  * - Draggable + resizable windows (all edges/corners)
@@ -331,22 +332,7 @@ export default function App() {
                         <div className="w-72 h-90 mb-15 bg-gradient-to-b from-[#fff] to-[#f0f0f0] border grid place-items-center">
                             <img src={profilePic} alt="Profile" className="w-72 h-90 object-cover border" />
                         </div>
-                        <div className="absolute bottom-2 left-0 right-0 mx-3 h-14 bg-[#c0c0c07a] border grid grid-cols-14 gap-1 px-2 items-center">
-                            {Array.from({ length: 14 }).map((_, i) => (
-                                <div 
-                                key={i} 
-                                className="h-5 border" 
-                                style={{ backgroundColor: colors[i % colors.length] }}
-                                />
-                            ))}
-                            {Array.from({ length: 14 }).map((_, i) => (
-                                <div 
-                                key={i} 
-                                className="h-5 border" 
-                                style={{ backgroundColor: colors[i % colors.length + 14] }}
-                                />
-                            ))}
-                        </div>
+                        <PaintColors />
                     </div>
                 </div>
             </RetroWindow>
