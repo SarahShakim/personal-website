@@ -1,21 +1,5 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import profilePic from "./assets/SHA_3678.JPG";
-import starIcon from "./assets/ms_paint_icons/ms_paint_star.png";
-import dottedRectangleIcon from "./assets/ms_paint_icons/ms_paint_dotted_rectangle.png";
-import bluePencilIcon from "./assets/ms_paint_icons/ms_paint_blue_pencil.png";
-import eraserIcon from "./assets/ms_paint_icons/ms_paint_eraser.png"
-import bucketIcon from "./assets/ms_paint_icons/ms_paint_bucket.png"
-import eyeDropperIcon from "./assets/ms_paint_icons/ms_paint_eyedropper.png"
-import magnifyingGlassIcon from "./assets/ms_paint_icons/ms_paint_magnifying_glass.png"
-import yellowPencilIcon from "./assets/ms_paint_icons/ms_paint_yellow_pencil.png"
-import brushIcon from "./assets/ms_paint_icons/ms_paint_brush.png"
-import letterIcon from "./assets/ms_paint_icons/ms_paint_letter.png"
-import lineIcon from "./assets/ms_paint_icons/ms_paint_line.png"
-import curvedLineIcon from "./assets/ms_paint_icons/ms_paint_curved_line.png"
-import rectangleIcon from "./assets/ms_paint_icons/ms_paint_rectangle.png"
-import polygonIcon from "./assets/ms_paint_icons/ms_paint_polygon.png"
-import ovalIcon from "./assets/ms_paint_icons/ms_paint_oval.png"
-import roundedRectangleIcon from "./assets/ms_paint_icons/ms_paint_rounded_rectangle.png"
 import ApplicationIcon from "./ApplicationIcon";
 import RetroWindow from "./RetroWindow";
 import TipBar from "./TipBar";
@@ -25,6 +9,8 @@ import ArcadeApp from "./assets/application_icons/arcade_app.png"
 import ProfileApp from "./assets/application_icons/profile_app.png"
 import PersonalCards from "./PersonalCards";
 import WorkExperience from "./WorkExperience";
+import AngularIcon from "./assets/skills/angular.png"
+import PaintIcons from "./PaintIcons";
 /**
  * DROP-IN APP.JSX (Vite + React, Tailwind v3/v4)
  * - Draggable + resizable windows (all edges/corners)
@@ -36,25 +22,6 @@ import WorkExperience from "./WorkExperience";
  */
 
 // ---------- CONFIG: tweak these to your liking ----------
-const ms_paint_icons = [
-    starIcon,
-    dottedRectangleIcon,
-    eraserIcon,
-    bucketIcon,
-    eyeDropperIcon,
-    magnifyingGlassIcon,
-    yellowPencilIcon,
-    brushIcon,
-    bluePencilIcon,
-    letterIcon,
-    lineIcon,
-    curvedLineIcon,
-    rectangleIcon,
-    polygonIcon,
-    ovalIcon,
-    roundedRectangleIcon
-]
-
 const DEFAULT_SIZES = {
     profile: { w: 1000, h: 700 },
     paint: { w: 500, h: 520 },
@@ -288,7 +255,10 @@ export default function App() {
                 <div className="grid grid-cols-[110px_1fr] gap-4 mb-6 text-base">
                     <div className="text-[#6c5ce7] font-extrabold">Front-end:</div>
                     <div className="flex flex-wrap gap-x-8 gap-y-5">
-                    <div className="flex items-center gap-2"><span>🅰️</span>Angular</div>
+                    <div className="flex items-center gap-2">
+                        <img src={AngularIcon} className="w-4 h-4"/>
+                        <span>Angular</span>
+                    </div>
                     <div className="flex items-center gap-2"><span>⚛️</span>React</div>
                     <div className="flex items-center gap-2"><span>🔶</span>HTML5</div>
                     <div className="flex items-center gap-2"><span>🎨</span>CSS3</div>
@@ -356,36 +326,28 @@ export default function App() {
                 hasToolbar={false}
             >
                 <div className="h-full grid grid-cols-[100px_1fr]">
-                <div className="p-3 bg-[#c0c0c07a] border-r">
-                    <div className="grid grid-cols-2 gap-1">
-                    {Array.from({ length: 16 }).map((_, i) => (
-                        <div key={i} className="h-8 bg-white border flex items-center justify-center">
-                            <img src={ms_paint_icons[i % ms_paint_icons.length]} alt={`icon-${i}`} className="h-7 w-8 object-contain"></img>
+                    <PaintIcons />
+                    <div className="relative bg-[#c0c0c07a] grid place-items-center">
+                        <div className="w-72 h-90 mb-15 bg-gradient-to-b from-[#fff] to-[#f0f0f0] border grid place-items-center">
+                            <img src={profilePic} alt="Profile" className="w-72 h-90 object-cover border" />
                         </div>
-                    ))}
+                        <div className="absolute bottom-2 left-0 right-0 mx-3 h-14 bg-[#c0c0c07a] border grid grid-cols-14 gap-1 px-2 items-center">
+                            {Array.from({ length: 14 }).map((_, i) => (
+                                <div 
+                                key={i} 
+                                className="h-5 border" 
+                                style={{ backgroundColor: colors[i % colors.length] }}
+                                />
+                            ))}
+                            {Array.from({ length: 14 }).map((_, i) => (
+                                <div 
+                                key={i} 
+                                className="h-5 border" 
+                                style={{ backgroundColor: colors[i % colors.length + 14] }}
+                                />
+                            ))}
+                        </div>
                     </div>
-                </div>
-                <div className="relative bg-[#c0c0c07a] grid place-items-center">
-                    <div className="w-72 h-90 mb-15 bg-gradient-to-b from-[#fff] to-[#f0f0f0] border grid place-items-center">
-                    <img src={profilePic} alt="Profile" className="w-72 h-90 object-cover border" />
-                    </div>
-                    <div className="absolute bottom-2 left-0 right-0 mx-3 h-14 bg-[#c0c0c07a] border grid grid-cols-14 gap-1 px-2 items-center">
-                    {Array.from({ length: 14 }).map((_, i) => (
-                        <div 
-                        key={i} 
-                        className="h-5 border" 
-                        style={{ backgroundColor: colors[i % colors.length] }}
-                        />
-                    ))}
-                    {Array.from({ length: 14 }).map((_, i) => (
-                        <div 
-                        key={i} 
-                        className="h-5 border" 
-                        style={{ backgroundColor: colors[i % colors.length + 14] }}
-                        />
-                    ))}
-                    </div>
-                </div>
                 </div>
             </RetroWindow>
             </div>
