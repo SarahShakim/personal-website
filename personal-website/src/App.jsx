@@ -1,5 +1,4 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
-import profilePic from "./assets/SHA_3678.JPG";
 import RetroWindow from "./RetroWindow";
 import TipBar from "./TipBar";
 import PersonalCards from "./PersonalCards";
@@ -11,6 +10,7 @@ import Contact from "./Contact";
 import AboutMe from "./AboutMe";
 import Education from "./Education";
 import DesktopApplications from "./DesktopApplicatons";
+import ProfilePicture from "./ProfilePicture";
 /**
  * DROP-IN APP.JSX (Vite + React, Tailwind v3/v4)
  * - Draggable + resizable windows (all edges/corners)
@@ -209,9 +209,7 @@ export default function App() {
                     <div className="h-full grid grid-cols-[100px_1fr]">
                         <PaintIcons />
                         <div className="relative bg-[#c0c0c07a] grid place-items-center">
-                            <div className="w-72 h-90 mb-15 bg-gradient-to-b from-[#fff] to-[#f0f0f0] border grid place-items-center">
-                                <img src={profilePic} alt="Profile" className="w-72 h-90 object-cover border" />
-                            </div>
+                            <ProfilePicture />
                             <PaintColors />
                         </div>
                     </div>
