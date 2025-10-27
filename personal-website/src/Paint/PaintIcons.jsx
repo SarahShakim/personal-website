@@ -1,20 +1,20 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
-import starIcon from "./assets/ms_paint_icons/ms_paint_star.png";
-import dottedRectangleIcon from "./assets/ms_paint_icons/ms_paint_dotted_rectangle.png";
-import bluePencilIcon from "./assets/ms_paint_icons/ms_paint_blue_pencil.png";
-import eraserIcon from "./assets/ms_paint_icons/ms_paint_eraser.png"
-import bucketIcon from "./assets/ms_paint_icons/ms_paint_bucket.png"
-import eyeDropperIcon from "./assets/ms_paint_icons/ms_paint_eyedropper.png"
-import magnifyingGlassIcon from "./assets/ms_paint_icons/ms_paint_magnifying_glass.png"
-import yellowPencilIcon from "./assets/ms_paint_icons/ms_paint_yellow_pencil.png"
-import brushIcon from "./assets/ms_paint_icons/ms_paint_brush.png"
-import letterIcon from "./assets/ms_paint_icons/ms_paint_letter.png"
-import lineIcon from "./assets/ms_paint_icons/ms_paint_line.png"
-import curvedLineIcon from "./assets/ms_paint_icons/ms_paint_curved_line.png"
-import rectangleIcon from "./assets/ms_paint_icons/ms_paint_rectangle.png"
-import polygonIcon from "./assets/ms_paint_icons/ms_paint_polygon.png"
-import ovalIcon from "./assets/ms_paint_icons/ms_paint_oval.png"
-import roundedRectangleIcon from "./assets/ms_paint_icons/ms_paint_rounded_rectangle.png"
+import starIcon from "../assets/ms_paint_icons/ms_paint_star.png";
+import dottedRectangleIcon from "../assets/ms_paint_icons/ms_paint_dotted_rectangle.png";
+import bluePencilIcon from "../assets/ms_paint_icons/ms_paint_blue_pencil.png";
+import eraserIcon from "../assets/ms_paint_icons/ms_paint_eraser.png"
+import bucketIcon from "../assets/ms_paint_icons/ms_paint_bucket.png"
+import eyeDropperIcon from "../assets/ms_paint_icons/ms_paint_eyedropper.png"
+import magnifyingGlassIcon from "../assets/ms_paint_icons/ms_paint_magnifying_glass.png"
+import yellowPencilIcon from "../assets/ms_paint_icons/ms_paint_yellow_pencil.png"
+import brushIcon from "../assets/ms_paint_icons/ms_paint_brush.png"
+import letterIcon from "../assets/ms_paint_icons/ms_paint_letter.png"
+import lineIcon from "../assets/ms_paint_icons/ms_paint_line.png"
+import curvedLineIcon from "../assets/ms_paint_icons/ms_paint_curved_line.png"
+import rectangleIcon from "../assets/ms_paint_icons/ms_paint_rectangle.png"
+import polygonIcon from "../assets/ms_paint_icons/ms_paint_polygon.png"
+import ovalIcon from "../assets/ms_paint_icons/ms_paint_oval.png"
+import roundedRectangleIcon from "../assets/ms_paint_icons/ms_paint_rounded_rectangle.png"
 
 export default function PaintIcons() {
     const ms_paint_icons = [

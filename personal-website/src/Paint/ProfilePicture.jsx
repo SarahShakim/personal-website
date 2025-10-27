@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
-import profilePic from "./assets/SHA_3678.JPG";
+import profilePic from "../assets/SHA_3678.JPG";
 
 export default function ProfilePicture() {
     return (

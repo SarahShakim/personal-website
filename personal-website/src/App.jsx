@@ -135,7 +135,7 @@ export default function App() {
 
                     <RetroWindow
                         id="paint"
-                        title="Profile pic • paint"
+                        title="Profile pic • Paint"
                         isOpen={open.paint}
                         onClose={() => close("paint")}
                         onFocus={focus}
