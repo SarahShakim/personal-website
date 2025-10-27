@@ -17,8 +17,8 @@ export default function Education() {
 
                 {/* degree + school */}
                 <div>
-                    <div className="font-extrabold">Bachelors of<br/>Engineering</div>
-                    <div className="mt-3 font-extrabold">University of<br/>Waterloo</div>
+                    <div className="mt-1 font-extrabold text-sm">University of<br/>Waterloo</div>
+                    <div className="mt-5 font-extrabold text-sm">Bachelors of<br/>Applied Science</div>
                 </div>
             </div>
         </div>
