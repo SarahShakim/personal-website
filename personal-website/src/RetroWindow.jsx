@@ -31,55 +31,55 @@ export default function RetroWindow({
 
     useEffect(() => {
         function onMove(e) {
-        // Dragging
-        if (dragRef.current.dragging) {
-            const d = dragRef.current;
-            const x = d.baseX + (e.clientX - d.startX);
-            const y = d.baseY + (e.clientY - d.startY);
-            setPos(id, { x, y });
-            return;
-        }
+            // Dragging
+            if (dragRef.current.dragging) {
+                const d = dragRef.current;
+                const x = d.baseX + (e.clientX - d.startX);
+                const y = d.baseY + (e.clientY - d.startY);
+                setPos(id, { x, y });
+                return;
+            }
 
-        // Resizing
-        const r = resizeRef.current;
-        if (!r.resizing) return;
-        const dx = e.clientX - r.startX;
-        const dy = e.clientY - r.startY;
+            // Resizing
+            const r = resizeRef.current;
+            if (!r.resizing) return;
+            const dx = e.clientX - r.startX;
+            const dy = e.clientY - r.startY;
 
-        let newW = r.startW;
-        let newH = r.startH;
-        let newL = r.startL;
-        let newT = r.startT;
+            let newW = r.startW;
+            let newH = r.startH;
+            let newL = r.startL;
+            let newT = r.startT;
 
-        const edge = r.edge;
-        // Horizontal
-        if (edge.includes("e")) newW = Math.max(minSize.w, r.startW + dx);
-        if (edge.includes("w")) {
-            const w = Math.max(minSize.w, r.startW - dx);
-            newL = r.startL + (r.startW - w);
-            newW = w;
-        }
-        // Vertical
-        if (edge.includes("s")) newH = Math.max(minSize.h, r.startH + dy);
-        if (edge.includes("n")) {
-            const h = Math.max(minSize.h, r.startH - dy);
-            newT = r.startT + (r.startH - h);
-            newH = h;
-        }
-        setPos(id, { x: newL, y: newT });
-        setSize(id, { w: newW, h: newH });
+            const edge = r.edge;
+            // Horizontal
+            if (edge.includes("e")) newW = Math.max(minSize.w, r.startW + dx);
+            if (edge.includes("w")) {
+                const w = Math.max(minSize.w, r.startW - dx);
+                newL = r.startL + (r.startW - w);
+                newW = w;
+            }
+            // Vertical
+            if (edge.includes("s")) newH = Math.max(minSize.h, r.startH + dy);
+            if (edge.includes("n")) {
+                const h = Math.max(minSize.h, r.startH - dy);
+                newT = r.startT + (r.startH - h);
+                newH = h;
+            }
+            setPos(id, { x: newL, y: newT });
+            setSize(id, { w: newW, h: newH });
         }
 
         function onUp() {
-        dragRef.current.dragging = false;
-        resizeRef.current.resizing = false;
+            dragRef.current.dragging = false;
+            resizeRef.current.resizing = false;
         }
 
         document.addEventListener("mousemove", onMove);
         document.addEventListener("mouseup", onUp);
         return () => {
-        document.removeEventListener("mousemove", onMove);
-        document.removeEventListener("mouseup", onUp);
+            document.removeEventListener("mousemove", onMove);
+            document.removeEventListener("mouseup", onUp);
         };
     }, [id, setPos, setSize, minSize.w, minSize.h]);
 
@@ -88,11 +88,11 @@ export default function RetroWindow({
     const startDrag = (e) => {
         onFocus(id);
         dragRef.current = {
-        dragging: true,
-        startX: e.clientX,
-        startY: e.clientY,
-        baseX: pos.x,
-        baseY: pos.y,
+            dragging: true,
+            startX: e.clientX,
+            startY: e.clientY,
+            baseX: pos.x,
+            baseY: pos.y,
         };
     };
 
@@ -111,7 +111,9 @@ export default function RetroWindow({
                     className="flex items-center justify-between px-3 py-1 bg-gradient-to-r from-[#6c5ce7] to-[#a29bfe] text-white text-sm cursor-move font-bold tracking-wider shrink-0"
                     onMouseDown={startDrag}
                 >
-                    <div className="font-semibold tracking-wide">{title}</div>
+                    <div className="font-semibold tracking-wide">
+                        {title}
+                    </div>
                     <div className="flex gap-1">
                         <button
                             aria-label="Close"
