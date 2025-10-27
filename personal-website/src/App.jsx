@@ -14,6 +14,7 @@ import PaintColors from "./PaintColors";
 import Skills from "./Skills";
 import Contact from "./Contact";
 import AboutMe from "./AboutMe";
+import Education from "./Education";
 /**
  * DROP-IN APP.JSX (Vite + React, Tailwind v3/v4)
  * - Draggable + resizable windows (all edges/corners)
@@ -194,46 +195,24 @@ export default function App() {
                             {/* ORANGE STRIP */}
                             <div className="bg-[#f7c2a7]">
                                 <div className="grid grid-cols-[0.8fr_1.1fr_1fr] gap-6 p-6">
-
                                     <Contact />
                                     <AboutMe />
-
-                                    {/* EDUCATION (right) */}
-                                    <div className="bg-[#eafaf1] border-2 border-[#72d79e] rounded-md p-4">
-                                        <div className="text-2xl font-extrabold text-[#6b21a8] underline decoration-4">
-                                            EDUCATION
-                                        </div>
-
-                                    <div className="mt-4 grid grid-cols-[72px_1fr] gap-4 items-start">
-                                        {/* year badge */}
-                                        <div className="bg-[#f7c2a7] border-2 border-[#f08e39] rounded-md h-28 grid place-items-center">
-                                            <div className="flex flex-col items-center font-extrabold text-3xl leading-none text-black">
-                                                <span>20</span><span>24</span>
-                                            </div>
-                                        </div>
-
-                                        {/* degree + school */}
-                                        <div>
-                                            <div className="font-extrabold">Bachelors of<br/>Engineering</div>
-                                            <div className="mt-3 font-extrabold">University of<br/>Waterloo</div>
-                                        </div>
-                                    </div>
+                                    <Education />
                                 </div>
                             </div>
-                        </div>
 
-                        <Skills />
+                            <Skills />
 
-                        <div className="h-full grid grid-cols-[320px_1fr] mt-4">
-                            <div className="p-5 bg-[#eafaf1] border-r border-t">
-                                <PersonalCards title="Hobbies & Interests" listItems={hobbies}/>
-                                <PersonalCards title="Relevant Courses" listItems={relevantCourses} additionalCard={true}/>
-                            </div>
+                            <div className="h-full grid grid-cols-[320px_1fr] mt-4">
+                                <div className="p-5 bg-[#eafaf1] border-r border-t">
+                                    <PersonalCards title="Hobbies & Interests" listItems={hobbies}/>
+                                    <PersonalCards title="Relevant Courses" listItems={relevantCourses} additionalCard={true}/>
+                                </div>
 
-                            <WorkExperience />
+                                <WorkExperience />
                         
+                            </div>
                         </div>
-                    </div>
                     </RetroWindow>
 
                 {/* PAINT WINDOW */}
