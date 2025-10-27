@@ -1,9 +1,9 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import RetroWindow from "./RetroWindow";
 import TipBar from "./TipBar";
-import DesktopApplications from "./DesktopApplicatons";
-import InternetApplication from "./InternetApplication";
-import PaintApplication from "./PaintApplication";
+import DesktopApplications from "./Desktop/DesktopApplicatons";
+import InternetApplication from "./Internet/InternetApplication";
+import PaintApplication from "./Paint/PaintApplication";
 
 const DEFAULT_SIZES = {
     profile: { w: 1000, h: 700 },
