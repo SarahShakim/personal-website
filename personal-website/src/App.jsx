@@ -73,16 +73,6 @@ export default function App() {
     const close = (id) => setOpen((o) => ({ ...o, [id]: false }));
     const reopen = (id) => { setOpen((o) => ({ ...o, [id]: true })); focus(id); };
 
-    const colors = [
-        "#000000ff", "#585858ff", "#5c0101ff", "#535c01ff",
-        "#006100ff", "#020079ff", "#53005eff", "#969900ff",
-        "#003010ff", "#39a1e6ff", "#007767ff", "#30227eff",
-        "#664b00ff", "#9B5DE5", "#ffffffff", "#c5c5c5ff", "#c50000ff", 
-        "#fffb28ff", "#00f715ff", "#00f7ebff", "#0019f7ff", "#ce00f7ff", 
-        "#fffd96ff", "#96ff9fff", "#7bf6ffff", "#cea3ffff", "#f70090ff", 
-        "#f79400ff"
-    ];
-
     const hobbies = [
         "Avid Gamer", 
         "Hackathons", 
