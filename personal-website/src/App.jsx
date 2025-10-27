@@ -9,11 +9,11 @@ import ArcadeApp from "./assets/application_icons/arcade_app.png"
 import ProfileApp from "./assets/application_icons/profile_app.png"
 import PersonalCards from "./PersonalCards";
 import WorkExperience from "./WorkExperience";
-import AngularIcon from "./assets/skills/angular.png"
 import PaintIcons from "./PaintIcons";
 import PaintColors from "./PaintColors";
 import Skills from "./Skills";
 import Contact from "./Contact";
+import AboutMe from "./AboutMe";
 /**
  * DROP-IN APP.JSX (Vite + React, Tailwind v3/v4)
  * - Draggable + resizable windows (all edges/corners)
@@ -196,21 +196,13 @@ export default function App() {
                                 <div className="grid grid-cols-[0.8fr_1.1fr_1fr] gap-6 p-6">
 
                                     <Contact />
-                                    
-                                    {/* ABOUT (middle) */}
-                                    <div className="bg-[#f7c2a7]">
-                                        <p className="text-[13px] leading-6 text-black">
-                                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse tempor erat et urna
-                                            rhoncus, sed venenatis lectus gravida. Sed dictum mi ex, id vestibulum orci lacinia eu.
-                                            Maecenas in est tortor. Pellentesque habitant morbi tristique senectus et netus.
-                                        </p>
-                                    </div>
+                                    <AboutMe />
 
                                     {/* EDUCATION (right) */}
                                     <div className="bg-[#eafaf1] border-2 border-[#72d79e] rounded-md p-4">
-                                    <div className="text-2xl font-extrabold text-[#6b21a8] underline decoration-4">
-                                        EDUCATION
-                                    </div>
+                                        <div className="text-2xl font-extrabold text-[#6b21a8] underline decoration-4">
+                                            EDUCATION
+                                        </div>
 
                                     <div className="mt-4 grid grid-cols-[72px_1fr] gap-4 items-start">
                                         {/* year badge */}
