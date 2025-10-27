@@ -1,23 +1,10 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import RetroWindow from "./RetroWindow";
 import TipBar from "./TipBar";
-import PersonalCards from "./PersonalCards";
-import WorkExperience from "./WorkExperience";
-import Skills from "./Skills";
 import DesktopApplications from "./DesktopApplicatons";
-import Bio from "./Bio";
+import InternetApplication from "./InternetApplication";
 import PaintApplication from "./PaintApplication";
-/**
- * DROP-IN APP.JSX (Vite + React, Tailwind v3/v4)
- * - Draggable + resizable windows (all edges/corners)
- * - Per-window default & min sizes (edit DEFAULT_SIZES / MIN_SIZES)
- * - Brings focused window to front
- * - Close / reopen from left sidebar
- * - Responsive: caps sizes and clamps positions on browser resize
- * - Initial layout places the "paint" window to the right of "profile"
- */
 
-// ---------- CONFIG: tweak these to your liking ----------
 const DEFAULT_SIZES = {
     profile: { w: 1000, h: 700 },
     paint: { w: 500, h: 520 },
@@ -32,7 +19,6 @@ const DEFAULT_POSITIONS = {
     profile: { x: 40, y: 120 },
     paint: { x: 540, y: 100 }, // will be moved to the right of profile on mount
 };
-// --------------------------------------------------------
 
 // Helper to clamp numbers
 function clamp(v, lo, hi) {
@@ -65,21 +51,6 @@ export default function App() {
     const close = (id) => setOpen((o) => ({ ...o, [id]: false }));
     const reopen = (id) => { setOpen((o) => ({ ...o, [id]: true })); focus(id); };
 
-    const hobbies = [
-        "Avid Gamer", 
-        "Hackathons", 
-        "Experimenting with new tech", 
-        "Baking"
-    ]
-
-    const relevantCourses = [
-        "Data structures & algorithms",
-        "Programming for performance",
-        "Linear algebra",
-        "Electronic circuits",
-        "Numerical Methods",
-        "Linear Circuits"
-    ]
     // One-time layout: place "paint" to the right of "profile" on mount
     useEffect(() => {
         const gutter = 24;
@@ -141,14 +112,10 @@ export default function App() {
 
     return (
         <div className="w-screen h-screen relative overflow-hidden font-mono text-sm">
-        {/* Desktop gradient */}
             <div className="absolute inset-0 bg-gradient-to-b from-[#bde0fe] via-[#cdb4db] to-[#ffc8dd]" />
             <div className="absolute inset-0 p-6 grid grid-cols-[120px_1fr_120px] gap-4">
                 <DesktopApplications />
-
-                {/* Main area */}
                 <div className="relative">
-                {/* PROFILE WINDOW */}
                     <RetroWindow
                         id="profile"
                         title="Sarah's Profile • Internet"
@@ -163,20 +130,7 @@ export default function App() {
                         minSize={MIN_SIZES.profile}
                         hasToolbar={true}
                     >
-                        <div className="h-full flex flex-col bg-white">
-                            <Bio />
-                            <Skills />
-
-                            <div className="h-full grid grid-cols-[320px_1fr] mt-4">
-                                <div className="p-5 bg-[#eafaf1] border-r border-t">
-                                    <PersonalCards title="Hobbies & Interests" listItems={hobbies}/>
-                                    <PersonalCards title="Relevant Courses" listItems={relevantCourses} additionalCard={true}/>
-                                </div>
-
-                                <WorkExperience />
-                        
-                            </div>
-                        </div>
+                        <InternetApplication />
                     </RetroWindow>
 
                     <RetroWindow
@@ -196,10 +150,8 @@ export default function App() {
                         <PaintApplication />
                     </RetroWindow>
                 </div>
-
-            <div />
+                <div />
             </div>
-
             <TipBar />
         </div>
     );
