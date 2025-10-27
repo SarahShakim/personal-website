@@ -1,12 +1,7 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import profilePic from "./assets/SHA_3678.JPG";
-import ApplicationIcon from "./ApplicationIcon";
 import RetroWindow from "./RetroWindow";
 import TipBar from "./TipBar";
-import FileApp from "./assets/application_icons/file_app.png"
-import WorldApp from "./assets/application_icons/world_app.png"
-import ArcadeApp from "./assets/application_icons/arcade_app.png"
-import ProfileApp from "./assets/application_icons/profile_app.png"
 import PersonalCards from "./PersonalCards";
 import WorkExperience from "./WorkExperience";
 import PaintIcons from "./PaintIcons";
@@ -15,6 +10,7 @@ import Skills from "./Skills";
 import Contact from "./Contact";
 import AboutMe from "./AboutMe";
 import Education from "./Education";
+import DesktopApplications from "./DesktopApplicatons";
 /**
  * DROP-IN APP.JSX (Vite + React, Tailwind v3/v4)
  * - Draggable + resizable windows (all edges/corners)
@@ -152,17 +148,7 @@ export default function App() {
         {/* Desktop gradient */}
             <div className="absolute inset-0 bg-gradient-to-b from-[#bde0fe] via-[#cdb4db] to-[#ffc8dd]" />
             <div className="absolute inset-0 p-6 grid grid-cols-[120px_1fr_120px] gap-4">
-                {/* Sidebar */}
-                <div className="flex flex-col justify-between items-center py-6">
-                <div className="flex flex-col gap-6">
-                    <ApplicationIcon label="Projects" onClick={() => reopen("profile")} icon={FileApp}/>
-                    <ApplicationIcon label="Sarah's Profile" onClick={() => reopen("profile")} icon={WorldApp}/>
-                </div>
-                <div className="flex flex-col gap-6">
-                    <ApplicationIcon label="Sudoku" onClick={() => reopen("profile")} icon={ArcadeApp}/>
-                    <ApplicationIcon label="Profile pic" onClick={() => reopen("paint")} icon={ProfileApp} />
-                </div>
-                </div>
+                <DesktopApplications />
 
                 {/* Main area */}
                 <div className="relative">
