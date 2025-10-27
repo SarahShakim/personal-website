@@ -3,15 +3,10 @@ import RetroWindow from "./RetroWindow";
 import TipBar from "./TipBar";
 import PersonalCards from "./PersonalCards";
 import WorkExperience from "./WorkExperience";
-import PaintIcons from "./PaintIcons";
-import PaintColors from "./PaintColors";
 import Skills from "./Skills";
-import Contact from "./Contact";
-import AboutMe from "./AboutMe";
-import Education from "./Education";
 import DesktopApplications from "./DesktopApplicatons";
-import ProfilePicture from "./ProfilePicture";
-import BioSection from "./BioSection";
+import Bio from "./Bio";
+import PaintApplication from "./PaintApplication";
 /**
  * DROP-IN APP.JSX (Vite + React, Tailwind v3/v4)
  * - Draggable + resizable windows (all edges/corners)
@@ -169,7 +164,7 @@ export default function App() {
                         hasToolbar={true}
                     >
                         <div className="h-full flex flex-col bg-white">
-                            <BioSection />
+                            <Bio />
                             <Skills />
 
                             <div className="h-full grid grid-cols-[320px_1fr] mt-4">
@@ -184,32 +179,25 @@ export default function App() {
                         </div>
                     </RetroWindow>
 
-                {/* PAINT WINDOW */}
-                <RetroWindow
-                    id="paint"
-                    title="Profile pic • paint"
-                    isOpen={open.paint}
-                    onClose={() => close("paint")}
-                    onFocus={focus}
-                    z={zIndexMap.paint || 12}
-                    pos={positions.paint}
-                    setPos={setPos}
-                    size={sizes.paint}
-                    setSize={setSize}
-                    minSize={MIN_SIZES.paint}
-                    hasToolbar={false}
-                >
-                    <div className="h-full grid grid-cols-[100px_1fr]">
-                        <PaintIcons />
-                        <div className="relative bg-[#c0c0c07a] grid place-items-center">
-                            <ProfilePicture />
-                            <PaintColors />
-                        </div>
-                    </div>
-                </RetroWindow>
+                    <RetroWindow
+                        id="paint"
+                        title="Profile pic • paint"
+                        isOpen={open.paint}
+                        onClose={() => close("paint")}
+                        onFocus={focus}
+                        z={zIndexMap.paint || 12}
+                        pos={positions.paint}
+                        setPos={setPos}
+                        size={sizes.paint}
+                        setSize={setSize}
+                        minSize={MIN_SIZES.paint}
+                        hasToolbar={false}
+                    >
+                        <PaintApplication />
+                    </RetroWindow>
                 </div>
 
-                <div />
+            <div />
             </div>
 
             <TipBar />

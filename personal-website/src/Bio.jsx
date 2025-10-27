@@ -3,7 +3,7 @@ import Contact from "./Contact";
 import AboutMe from "./AboutMe";
 import Education from "./Education";
 
-export default function BioSection() {
+export default function Bio() {
     return (
         <div className="bg-[#f7c2a7]">
             <div className="grid grid-cols-[0.8fr_1.1fr_1fr] gap-6 p-6">
