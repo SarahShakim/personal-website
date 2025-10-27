@@ -11,6 +11,7 @@ import AboutMe from "./AboutMe";
 import Education from "./Education";
 import DesktopApplications from "./DesktopApplicatons";
 import ProfilePicture from "./ProfilePicture";
+import BioSection from "./BioSection";
 /**
  * DROP-IN APP.JSX (Vite + React, Tailwind v3/v4)
  * - Draggable + resizable windows (all edges/corners)
@@ -168,15 +169,7 @@ export default function App() {
                         hasToolbar={true}
                     >
                         <div className="h-full flex flex-col bg-white">
-                            {/* ORANGE STRIP */}
-                            <div className="bg-[#f7c2a7]">
-                                <div className="grid grid-cols-[0.8fr_1.1fr_1fr] gap-6 p-6">
-                                    <Contact />
-                                    <AboutMe />
-                                    <Education />
-                                </div>
-                            </div>
-
+                            <BioSection />
                             <Skills />
 
                             <div className="h-full grid grid-cols-[320px_1fr] mt-4">
