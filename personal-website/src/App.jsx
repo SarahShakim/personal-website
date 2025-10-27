@@ -13,6 +13,7 @@ import AngularIcon from "./assets/skills/angular.png"
 import PaintIcons from "./PaintIcons";
 import PaintColors from "./PaintColors";
 import Skills from "./Skills";
+import Contact from "./Contact";
 /**
  * DROP-IN APP.JSX (Vite + React, Tailwind v3/v4)
  * - Draggable + resizable windows (all edges/corners)
@@ -158,140 +159,122 @@ export default function App() {
     return (
         <div className="w-screen h-screen relative overflow-hidden font-mono text-sm">
         {/* Desktop gradient */}
-        <div className="absolute inset-0 bg-gradient-to-b from-[#bde0fe] via-[#cdb4db] to-[#ffc8dd]" />
-        <div className="absolute inset-0 p-6 grid grid-cols-[120px_1fr_120px] gap-4">
-            {/* Sidebar */}
-            <div className="flex flex-col justify-between items-center py-6">
-            <div className="flex flex-col gap-6">
-                <ApplicationIcon label="Projects" onClick={() => reopen("profile")} icon={FileApp}/>
-                <ApplicationIcon label="Sarah's Profile" onClick={() => reopen("profile")} icon={WorldApp}/>
-            </div>
-            <div className="flex flex-col gap-6">
-                <ApplicationIcon label="Sudoku" onClick={() => reopen("profile")} icon={ArcadeApp}/>
-                <ApplicationIcon label="Profile pic" onClick={() => reopen("paint")} icon={ProfileApp} />
-            </div>
-            </div>
-
-            {/* Main area */}
-            <div className="relative">
-            {/* PROFILE WINDOW */}
-            <RetroWindow
-                id="profile"
-                title="Sarah's Profile • Internet"
-                isOpen={open.profile}
-                onClose={() => close("profile")}
-                onFocus={focus}
-                z={zIndexMap.profile || 10}
-                pos={positions.profile}
-                setPos={setPos}
-                size={sizes.profile}
-                setSize={setSize}
-                minSize={MIN_SIZES.profile}
-                hasToolbar={true}
-            >
-                <div className="h-full flex flex-col bg-white">
-                {/* ORANGE STRIP */}
-                <div className="bg-[#f7c2a7]">
-                <div className="grid grid-cols-[0.8fr_1.1fr_1fr] gap-6 p-6">
-
-                    {/* CONTACT (left) */}
-                    <div className="bg-[#f7c2a7]">
-                    <div className="text-3xl font-extrabold leading-none">Sarah<br/>Shakim</div>
-
-                    <div className="mt-4 space-y-3 text-sm text-black">
-                        <div className="flex items-center gap-3">
-                        <span className="text-lg">📱</span>
-                        <span>(647) 772 - 7216</span>
-                        </div>
-                        <div className="flex items-center gap-3">
-                        <span className="text-lg">✉️</span>
-                        <span>sarahshakim@gmail.com</span>
-                        </div>
-                        <div className="flex items-center gap-3">
-                        <span className="text-lg">📍</span>
-                        <span>Toronto, ON</span>
-                        </div>
-                    </div>
-                    </div>
-
-                    {/* ABOUT (middle) */}
-                    <div className="bg-[#f7c2a7]">
-                    <p className="text-[13px] leading-6 text-black">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse tempor erat et urna
-                        rhoncus, sed venenatis lectus gravida. Sed dictum mi ex, id vestibulum orci lacinia eu.
-                        Maecenas in est tortor. Pellentesque habitant morbi tristique senectus et netus.
-                    </p>
-                    </div>
-
-                    {/* EDUCATION (right) */}
-                    <div className="bg-[#eafaf1] border-2 border-[#72d79e] rounded-md p-4">
-                    <div className="text-2xl font-extrabold text-[#6b21a8] underline decoration-4">
-                        EDUCATION
-                    </div>
-
-                    <div className="mt-4 grid grid-cols-[72px_1fr] gap-4 items-start">
-                        {/* year badge */}
-                        <div className="bg-[#f7c2a7] border-2 border-[#f08e39] rounded-md h-28 grid place-items-center">
-                        <div className="flex flex-col items-center font-extrabold text-3xl leading-none text-black">
-                            <span>20</span><span>24</span>
-                        </div>
-                        </div>
-
-                        {/* degree + school */}
-                        <div>
-                        <div className="font-extrabold">Bachelors of<br/>Engineering</div>
-                        <div className="mt-3 font-extrabold">University of<br/>Waterloo</div>
-                        </div>
-                    </div>
-                    </div>
+            <div className="absolute inset-0 bg-gradient-to-b from-[#bde0fe] via-[#cdb4db] to-[#ffc8dd]" />
+            <div className="absolute inset-0 p-6 grid grid-cols-[120px_1fr_120px] gap-4">
+                {/* Sidebar */}
+                <div className="flex flex-col justify-between items-center py-6">
+                <div className="flex flex-col gap-6">
+                    <ApplicationIcon label="Projects" onClick={() => reopen("profile")} icon={FileApp}/>
+                    <ApplicationIcon label="Sarah's Profile" onClick={() => reopen("profile")} icon={WorldApp}/>
+                </div>
+                <div className="flex flex-col gap-6">
+                    <ApplicationIcon label="Sudoku" onClick={() => reopen("profile")} icon={ArcadeApp}/>
+                    <ApplicationIcon label="Profile pic" onClick={() => reopen("paint")} icon={ProfileApp} />
                 </div>
                 </div>
 
-                <Skills />
+                {/* Main area */}
+                <div className="relative">
+                {/* PROFILE WINDOW */}
+                    <RetroWindow
+                        id="profile"
+                        title="Sarah's Profile • Internet"
+                        isOpen={open.profile}
+                        onClose={() => close("profile")}
+                        onFocus={focus}
+                        z={zIndexMap.profile || 10}
+                        pos={positions.profile}
+                        setPos={setPos}
+                        size={sizes.profile}
+                        setSize={setSize}
+                        minSize={MIN_SIZES.profile}
+                        hasToolbar={true}
+                    >
+                        <div className="h-full flex flex-col bg-white">
+                            {/* ORANGE STRIP */}
+                            <div className="bg-[#f7c2a7]">
+                                <div className="grid grid-cols-[0.8fr_1.1fr_1fr] gap-6 p-6">
 
-                <div className="h-full grid grid-cols-[320px_1fr] mt-4">
-                <div className="p-5 bg-[#eafaf1] border-r border-t">
-                    <PersonalCards title="Hobbies & Interests" listItems={hobbies}/>
-                    <PersonalCards title="Relevant Courses" listItems={relevantCourses} additionalCard={true}/>
-                </div>
+                                    <Contact />
+                                    
+                                    {/* ABOUT (middle) */}
+                                    <div className="bg-[#f7c2a7]">
+                                        <p className="text-[13px] leading-6 text-black">
+                                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse tempor erat et urna
+                                            rhoncus, sed venenatis lectus gravida. Sed dictum mi ex, id vestibulum orci lacinia eu.
+                                            Maecenas in est tortor. Pellentesque habitant morbi tristique senectus et netus.
+                                        </p>
+                                    </div>
 
-                <WorkExperience />
-                
-                </div>
-            </div>
-            </RetroWindow>
+                                    {/* EDUCATION (right) */}
+                                    <div className="bg-[#eafaf1] border-2 border-[#72d79e] rounded-md p-4">
+                                    <div className="text-2xl font-extrabold text-[#6b21a8] underline decoration-4">
+                                        EDUCATION
+                                    </div>
 
-            {/* PAINT WINDOW */}
-            <RetroWindow
-                id="paint"
-                title="Profile pic • paint"
-                isOpen={open.paint}
-                onClose={() => close("paint")}
-                onFocus={focus}
-                z={zIndexMap.paint || 12}
-                pos={positions.paint}
-                setPos={setPos}
-                size={sizes.paint}
-                setSize={setSize}
-                minSize={MIN_SIZES.paint}
-                hasToolbar={false}
-            >
-                <div className="h-full grid grid-cols-[100px_1fr]">
-                    <PaintIcons />
-                    <div className="relative bg-[#c0c0c07a] grid place-items-center">
-                        <div className="w-72 h-90 mb-15 bg-gradient-to-b from-[#fff] to-[#f0f0f0] border grid place-items-center">
-                            <img src={profilePic} alt="Profile" className="w-72 h-90 object-cover border" />
+                                    <div className="mt-4 grid grid-cols-[72px_1fr] gap-4 items-start">
+                                        {/* year badge */}
+                                        <div className="bg-[#f7c2a7] border-2 border-[#f08e39] rounded-md h-28 grid place-items-center">
+                                            <div className="flex flex-col items-center font-extrabold text-3xl leading-none text-black">
+                                                <span>20</span><span>24</span>
+                                            </div>
+                                        </div>
+
+                                        {/* degree + school */}
+                                        <div>
+                                            <div className="font-extrabold">Bachelors of<br/>Engineering</div>
+                                            <div className="mt-3 font-extrabold">University of<br/>Waterloo</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <PaintColors />
+
+                        <Skills />
+
+                        <div className="h-full grid grid-cols-[320px_1fr] mt-4">
+                            <div className="p-5 bg-[#eafaf1] border-r border-t">
+                                <PersonalCards title="Hobbies & Interests" listItems={hobbies}/>
+                                <PersonalCards title="Relevant Courses" listItems={relevantCourses} additionalCard={true}/>
+                            </div>
+
+                            <WorkExperience />
+                        
+                        </div>
                     </div>
+                    </RetroWindow>
+
+                {/* PAINT WINDOW */}
+                <RetroWindow
+                    id="paint"
+                    title="Profile pic • paint"
+                    isOpen={open.paint}
+                    onClose={() => close("paint")}
+                    onFocus={focus}
+                    z={zIndexMap.paint || 12}
+                    pos={positions.paint}
+                    setPos={setPos}
+                    size={sizes.paint}
+                    setSize={setSize}
+                    minSize={MIN_SIZES.paint}
+                    hasToolbar={false}
+                >
+                    <div className="h-full grid grid-cols-[100px_1fr]">
+                        <PaintIcons />
+                        <div className="relative bg-[#c0c0c07a] grid place-items-center">
+                            <div className="w-72 h-90 mb-15 bg-gradient-to-b from-[#fff] to-[#f0f0f0] border grid place-items-center">
+                                <img src={profilePic} alt="Profile" className="w-72 h-90 object-cover border" />
+                            </div>
+                            <PaintColors />
+                        </div>
+                    </div>
+                </RetroWindow>
                 </div>
-            </RetroWindow>
+
+                <div />
             </div>
 
-            <div />
-        </div>
-
-        <TipBar />
+            <TipBar />
         </div>
     );
 }
