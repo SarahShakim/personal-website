@@ -10,6 +10,7 @@ import ArcadeApp from "./assets/application_icons/arcade_app.png"
 import ProfileApp from "./assets/application_icons/profile_app.png"
 import ApplicationIcon from "./ApplicationIcon";
 import pythonLogo from "./assets/skills/python.png"
+import ProjectItem from "./ProjectItem";
 
 const DEFAULT_SIZES = {
     profile: { w: 1000, h: 700 },
@@ -27,7 +28,7 @@ const MIN_SIZES = {
 const DEFAULT_POSITIONS = {
     profile: { x: 40, y: 120 },
     paint: { x: 540, y: 100 }, // will be moved to the right of profile on mount
-    projects: { x: 100, h: 120 }
+    projects: { x: 100, y: 120 }
 };
 
 // Helper to clamp numbers
@@ -185,24 +186,7 @@ export default function App() {
                         hasToolbar={false}
                     >
                         <div className="h-full flex flex-col bg-white">
-                            <div className="p-4">
-                            {/* Project tile (top-left) */}
-                                <a
-                                    href="https://github.com"
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    className="inline-flex flex-col items-center gap-2"
-                                >
-                                    <div className="w-20 h-20 rounded-full bg-black grid place-items-center">
-                                    <img
-                                        src={pythonLogo}
-                                        alt="Python"
-                                        className="w-9 h-9"
-                                    />
-                                    </div>
-                                    <span className="text-[11px] text-black/70">Project #1</span>
-                                </a>
-                            </div>
+                            <ProjectItem />
                         </div>
                     </RetroWindow>
                 </div>
