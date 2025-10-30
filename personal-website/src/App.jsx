@@ -1,23 +1,33 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import RetroWindow from "./RetroWindow";
 import TipBar from "./TipBar";
-import DesktopApplications from "./Desktop/DesktopApplicatons";
+// import DesktopApplications from "./Desktop/DesktopApplicatons";
 import InternetApplication from "./Internet/InternetApplication";
 import PaintApplication from "./Paint/PaintApplication";
+import FileApp from "./assets/application_icons/file_app.png"
+import WorldApp from "./assets/application_icons/world_app.png"
+import ArcadeApp from "./assets/application_icons/arcade_app.png"
+import ProfileApp from "./assets/application_icons/profile_app.png"
+import ApplicationIcon from "./ApplicationIcon";
+import pythonLogo from "./assets/skills/python.png"
 
 const DEFAULT_SIZES = {
     profile: { w: 1000, h: 700 },
     paint: { w: 500, h: 520 },
+    projects: { w: 700, h: 500 }
 };
 
 const MIN_SIZES = {
     profile: { w: 520, h: 320 },
     paint: { w: 480, h: 320 },
+    projects: { w: 520, h: 320 }
+
 };
 
 const DEFAULT_POSITIONS = {
     profile: { x: 40, y: 120 },
     paint: { x: 540, y: 100 }, // will be moved to the right of profile on mount
+    projects: { x: 100, h: 120 }
 };
 
 // Helper to clamp numbers
@@ -26,7 +36,7 @@ function clamp(v, lo, hi) {
 }
 
 export default function App() {
-    const [open, setOpen] = useState({ profile: true, paint: true });
+    const [open, setOpen] = useState({ profile: true, paint: true, projects: false });
 
     // positions per window
     const [positions, setPositions] = useState({ ...DEFAULT_POSITIONS });
@@ -41,7 +51,7 @@ export default function App() {
     useEffect(() => { sizesRef.current = sizes; }, [sizes]);
 
     // bring-to-front ordering
-    const [order, setOrder] = useState(["profile", "paint"]);
+    const [order, setOrder] = useState(["profile", "paint", "projects"]);
     const zIndexMap = useMemo(() => {
         const base = 10;
         return order.reduce((acc, id, i) => ({ ...acc, [id]: base + i }), {});
@@ -114,7 +124,17 @@ export default function App() {
         <div className="w-screen h-screen relative overflow-hidden font-mono text-sm">
             <div className="absolute inset-0 bg-gradient-to-b from-[#bde0fe] via-[#cdb4db] to-[#ffc8dd]" />
             <div className="absolute inset-0 p-6 grid grid-cols-[120px_1fr_120px] gap-4">
-                <DesktopApplications />
+                {/* <DesktopApplications /> */}
+                <div className="flex flex-col justify-between items-center py-6">
+                    <div className="flex flex-col gap-6">
+                        <ApplicationIcon label="Projects" onClick={() => reopen("projects")} icon={FileApp}/>
+                        <ApplicationIcon label="Sarah's Profile" onClick={() => reopen("profile")} icon={WorldApp}/>
+                    </div>
+                    <div className="flex flex-col gap-6">
+                        <ApplicationIcon label="Sudoku" onClick={() => reopen("profile")} icon={ArcadeApp}/>
+                        <ApplicationIcon label="Profile pic" onClick={() => reopen("paint")} icon={ProfileApp} />
+                    </div>
+                </div>
                 <div className="relative">
                     <RetroWindow
                         id="profile"
@@ -148,6 +168,42 @@ export default function App() {
                         hasToolbar={false}
                     >
                         <PaintApplication />
+                    </RetroWindow>
+
+                    <RetroWindow
+                        id="projects"
+                        title="C:\Projects"
+                        isOpen={open.projects}
+                        onClose={() => close("projects")}
+                        onFocus={focus}
+                        z={zIndexMap.projects || 10}
+                        pos={positions.projects}
+                        setPos={setPos}
+                        size={sizes.projects}
+                        setSize={setSize}
+                        minSize={MIN_SIZES.projects}
+                        hasToolbar={false}
+                    >
+                        <div className="h-full flex flex-col bg-white">
+                            <div className="p-4">
+                            {/* Project tile (top-left) */}
+                                <a
+                                    href="https://github.com"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="inline-flex flex-col items-center gap-2"
+                                >
+                                    <div className="w-20 h-20 rounded-full bg-black grid place-items-center">
+                                    <img
+                                        src={pythonLogo}
+                                        alt="Python"
+                                        className="w-9 h-9"
+                                    />
+                                    </div>
+                                    <span className="text-[11px] text-black/70">Project #1</span>
+                                </a>
+                            </div>
+                        </div>
                     </RetroWindow>
                 </div>
                 <div />

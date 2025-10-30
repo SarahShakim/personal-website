@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
-import ApplicationIcon from "./ApplicationIcon";
+import ApplicationIcon from "../ApplicationIcon";
 import FileApp from "../assets/application_icons/file_app.png"
 import WorldApp from "../assets/application_icons/world_app.png"
 import ArcadeApp from "../assets/application_icons/arcade_app.png"

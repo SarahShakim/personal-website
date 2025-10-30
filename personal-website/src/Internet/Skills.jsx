@@ -142,11 +142,11 @@ export default function Skills() {
             </h3>
 
             {allSkills.map((skillType, item) => (
-                <div className="grid grid-cols-[110px_1fr] gap-4 mb-6 text-base">
+                <div key={item} className="grid grid-cols-[110px_1fr] gap-4 mb-6 text-base">
                     <div className="text-[#6c5ce7] font-extrabold">{skillType.name}:</div>
                     <div className="flex flex-wrap gap-x-8 gap-y-5">
                         {skillType.skills.map((skill, i) => (
-                            <div className="flex items-center gap-2">
+                            <div key={i} className="flex items-center gap-2">
                                 <img src={skill.icon} className="w-4 h-4"/>
                                 <span>{skill.name}</span>
                             </div>
