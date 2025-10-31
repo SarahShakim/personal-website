@@ -1,5 +1,6 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import pythonLogo from "./assets/skills/python.png"
+
 export default function ProjectItem() {
     const projects = [
         {
