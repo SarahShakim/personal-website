@@ -22,15 +22,24 @@ export default function Sudoku({ className = "" }) {
             allow="gamepad *; fullscreen"
             onLoad={() => setLoaded(true)}
         />
-
-        <a
-            href={`${base}web/index.html`}
-            target="_blank"
-            rel="noreferrer"
-            className="absolute right-2 bottom-2 text-[11px] px-2 py-1 rounded border bg-white/80 hover:bg-white"
-        >
-            Open in new tab
-        </a>
+        <div className="flex">
+            <a
+                href={`https://github.com/SarahShakim/sudoku`}
+                target="_blank"
+                rel="noreferrer"
+                className="absolute right-2 bottom-10 text-[11px] px-2 py-1 rounded border bg-white/80 hover:bg-white"
+            >
+                GitHub Repo
+            </a>
+            <a
+                href={`${base}web/index.html`}
+                target="_blank"
+                rel="noreferrer"
+                className="absolute right-2 bottom-2 text-[11px] px-2 py-1 rounded border bg-white/80 hover:bg-white"
+            >
+                Open in new tab
+            </a>
+        </div>
         </div>
     );
 }
