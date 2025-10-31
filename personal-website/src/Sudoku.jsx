@@ -3,7 +3,7 @@ import { useState } from "react";
 export default function Sudoku({ className = "" }) {
     const [loaded, setLoaded] = useState(false);
     const base = import.meta.env.BASE_URL;
-    
+
     return (
         <div className={`relative w-full h-full ${className}`}>
         {!loaded && (
@@ -24,7 +24,7 @@ export default function Sudoku({ className = "" }) {
         />
 
         <a
-            href="/build/web/index.html"
+            href={`${base}web/index.html`}
             target="_blank"
             rel="noreferrer"
             className="absolute right-2 bottom-2 text-[11px] px-2 py-1 rounded border bg-white/80 hover:bg-white"
