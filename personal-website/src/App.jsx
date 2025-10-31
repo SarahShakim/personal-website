@@ -17,7 +17,7 @@ const DEFAULT_SIZES = {
     profile: { w: 1000, h: 700 },
     paint: { w: 500, h: 520 },
     projects: { w: 700, h: 500 },
-    sudoku: { w: 860, h: 720 },
+    sudoku: { w: 1347, h: 787 },
 };
 
 const MIN_SIZES = {
@@ -25,14 +25,13 @@ const MIN_SIZES = {
     paint: { w: 480, h: 320 },
     projects: { w: 520, h: 320 },
     sudoku: { w: 560, h: 560 },
-
 };
 
 const DEFAULT_POSITIONS = {
     profile: { x: 40, y: 120 },
     paint: { x: 540, y: 100 }, // will be moved to the right of profile on mount
     projects: { x: 100, y: 120 }, 
-    sudoku: { x: 100, y: 120 }
+    sudoku: { x: 205, y: 45 }
 };
 
 // Helper to clamp numbers
