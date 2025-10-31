@@ -11,24 +11,28 @@ import ProfileApp from "./assets/application_icons/profile_app.png"
 import ApplicationIcon from "./ApplicationIcon";
 import pythonLogo from "./assets/skills/python.png"
 import ProjectItem from "./ProjectItem";
+import Sudoku from "./Sudoku";
 
 const DEFAULT_SIZES = {
     profile: { w: 1000, h: 700 },
     paint: { w: 500, h: 520 },
-    projects: { w: 700, h: 500 }
+    projects: { w: 700, h: 500 },
+    sudoku: { w: 860, h: 720 },
 };
 
 const MIN_SIZES = {
     profile: { w: 520, h: 320 },
     paint: { w: 480, h: 320 },
-    projects: { w: 520, h: 320 }
+    projects: { w: 520, h: 320 },
+    sudoku: { w: 560, h: 560 },
 
 };
 
 const DEFAULT_POSITIONS = {
     profile: { x: 40, y: 120 },
     paint: { x: 540, y: 100 }, // will be moved to the right of profile on mount
-    projects: { x: 100, y: 120 }
+    projects: { x: 100, y: 120 }, 
+    sudoku: { x: 100, y: 120 }
 };
 
 // Helper to clamp numbers
@@ -37,7 +41,7 @@ function clamp(v, lo, hi) {
 }
 
 export default function App() {
-    const [open, setOpen] = useState({ profile: true, paint: true, projects: false });
+    const [open, setOpen] = useState({ profile: true, paint: true, projects: false, sudoku: false });
 
     // positions per window
     const [positions, setPositions] = useState({ ...DEFAULT_POSITIONS });
@@ -52,7 +56,7 @@ export default function App() {
     useEffect(() => { sizesRef.current = sizes; }, [sizes]);
 
     // bring-to-front ordering
-    const [order, setOrder] = useState(["profile", "paint", "projects"]);
+    const [order, setOrder] = useState(["profile", "paint", "projects", "sudoku"]);
     const zIndexMap = useMemo(() => {
         const base = 10;
         return order.reduce((acc, id, i) => ({ ...acc, [id]: base + i }), {});
@@ -132,7 +136,7 @@ export default function App() {
                         <ApplicationIcon label="Sarah's Profile" onClick={() => reopen("profile")} icon={WorldApp}/>
                     </div>
                     <div className="flex flex-col gap-6">
-                        <ApplicationIcon label="Sudoku" onClick={() => reopen("profile")} icon={ArcadeApp}/>
+                        <ApplicationIcon label="Sudoku" onClick={() => reopen("sudoku")} icon={ArcadeApp}/>
                         <ApplicationIcon label="Profile pic" onClick={() => reopen("paint")} icon={ProfileApp} />
                     </div>
                 </div>
@@ -188,6 +192,23 @@ export default function App() {
                         <div className="h-full flex flex-col bg-white">
                             <ProjectItem />
                         </div>
+                    </RetroWindow>
+
+                    <RetroWindow
+                        id="sudoku"
+                        title="Sudoku"
+                        isOpen={open.sudoku}
+                        onClose={() => close("sudoku")}
+                        onFocus={focus}
+                        z={zIndexMap.sudoku || 10}
+                        pos={positions.sudoku}
+                        setPos={setPos}
+                        size={sizes.sudoku}
+                        setSize={setSize}
+                        minSize={MIN_SIZES.sudoku}
+                        hasToolbar={false}
+                    >
+                        <Sudoku />
                     </RetroWindow>
                 </div>
                 <div />
