@@ -9,7 +9,7 @@ export default function Bio() {
             <div className="grid grid-cols-1 lg:grid-cols-[0.8fr_1.1fr_1fr] gap-6">
                 <Contact />
                 <AboutMe />
-                <div className="flex items-center justify-center">
+                <div className="flex items-center justify-center ml-4">
                     <Education />
                 </div>
             </div>
