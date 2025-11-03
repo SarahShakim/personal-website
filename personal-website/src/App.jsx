@@ -128,7 +128,6 @@ export default function App() {
         <div className="w-screen h-screen relative overflow-hidden font-mono text-sm">
             <div className="absolute inset-0 bg-gradient-to-b from-[#bde0fe] via-[#cdb4db] to-[#ffc8dd]" />
             <div className="absolute inset-0 p-6 grid grid-cols-[120px_1fr_120px] gap-4">
-                {/* <DesktopApplications /> */}
                 <div className="flex flex-col justify-between items-center py-6">
                     <div className="flex flex-col gap-6">
                         <ApplicationIcon label="Projects" onClick={() => reopen("projects")} icon={FileApp}/>
