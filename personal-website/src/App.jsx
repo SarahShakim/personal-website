@@ -9,7 +9,7 @@ import ArcadeApp from "./assets/application_icons/arcade_app.png"
 import ProfileApp from "./assets/application_icons/profile_app.png"
 import ApplicationIcon from "./ApplicationIcon";
 import Sudoku from "./Sudoku";
-import PersonalProjects from "./PersonalProjects";
+import PersonalProjects from "./PersonalProjects/PersonalProjects";
 
 const DEFAULT_SIZES = {
     profile: { w: 1000, h: 700 },
