@@ -8,7 +8,7 @@ import WorldApp from "./assets/application_icons/world_app.png"
 import ArcadeApp from "./assets/application_icons/arcade_app.png"
 import ProfileApp from "./assets/application_icons/profile_app.png"
 import ApplicationIcon from "./ApplicationIcon";
-import Sudoku from "./Sudoku";
+import Sudoku from "./Sudoku/Sudoku";
 import PersonalProjects from "./PersonalProjects/PersonalProjects";
 
 const DEFAULT_SIZES = {
