@@ -195,7 +195,7 @@ export default function App() {
 
                     <RetroWindow
                         id="sudoku"
-                        title="Sudoku"
+                        title="Sudoku • Arcade"
                         isOpen={open.sudoku}
                         onClose={() => close("sudoku")}
                         onFocus={focus}
