@@ -1,7 +1,6 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import RetroWindow from "./RetroWindow";
 import TipBar from "./TipBar";
-// import DesktopApplications from "./Desktop/DesktopApplicatons";
 import InternetApplication from "./Internet/InternetApplication";
 import PaintApplication from "./Paint/PaintApplication";
 import FileApp from "./assets/application_icons/file_app.png"
@@ -9,9 +8,8 @@ import WorldApp from "./assets/application_icons/world_app.png"
 import ArcadeApp from "./assets/application_icons/arcade_app.png"
 import ProfileApp from "./assets/application_icons/profile_app.png"
 import ApplicationIcon from "./ApplicationIcon";
-import pythonLogo from "./assets/skills/python.png"
-import ProjectItem from "./ProjectItem";
 import Sudoku from "./Sudoku";
+import PersonalProjects from "./PersonalProjects";
 
 const DEFAULT_SIZES = {
     profile: { w: 1000, h: 700 },
@@ -186,10 +184,8 @@ export default function App() {
                         setSize={setSize}
                         minSize={MIN_SIZES.projects}
                         hasToolbar={false}
-                    >
-                        <div className="h-full flex flex-col bg-white">
-                            <ProjectItem />
-                        </div>
+                    >   
+                        <PersonalProjects />
                     </RetroWindow>
 
                     <RetroWindow
