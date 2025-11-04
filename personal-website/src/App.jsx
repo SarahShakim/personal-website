@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useRef, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState, Suspense, lazy } from "react";
 import RetroWindow from "./RetroWindow";
 import TipBar from "./TipBar";
 import InternetApplication from "./Internet/InternetApplication";
@@ -8,9 +8,9 @@ import WorldApp from "./assets/application_icons/world_app.png"
 import ArcadeApp from "./assets/application_icons/arcade_app.png"
 import ProfileApp from "./assets/application_icons/profile_app.png"
 import ApplicationIcon from "./ApplicationIcon";
-import Sudoku from "./Sudoku/Sudoku";
 import PersonalProjects from "./PersonalProjects/PersonalProjects";
 
+const Sudoku = lazy(() => import("./Sudoku/Sudoku"))
 const DEFAULT_SIZES = {
     profile: { w: 1000, h: 700 },
     paint: { w: 500, h: 520 },
@@ -39,6 +39,7 @@ function clamp(v, lo, hi) {
 
 export default function App() {
     const [open, setOpen] = useState({ profile: true, paint: true, projects: false, sudoku: false });
+    const [sudokuVersion, setSudokuVersion] = useState(0)
 
     // positions per window
     const [positions, setPositions] = useState({ ...DEFAULT_POSITIONS });
@@ -60,7 +61,10 @@ export default function App() {
     }, [order]);
 
     const focus = (id) => setOrder((cur) => [...cur.filter((x) => x !== id), id]);
-    const close = (id) => setOpen((o) => ({ ...o, [id]: false }));
+    const close = (id) => {
+        if (id === "sudoku") setSudokuVersion(v => v + 1);
+        setOpen((o) => ({ ...o, [id]: false }));
+    };
     const reopen = (id) => { setOpen((o) => ({ ...o, [id]: true })); focus(id); };
 
     // One-time layout: place "paint" to the right of "profile" on mount
@@ -187,23 +191,27 @@ export default function App() {
                     >   
                         <PersonalProjects />
                     </RetroWindow>
-
-                    <RetroWindow
-                        id="sudoku"
-                        title="Sudoku • Arcade"
-                        isOpen={open.sudoku}
-                        onClose={() => close("sudoku")}
-                        onFocus={focus}
-                        z={zIndexMap.sudoku || 10}
-                        pos={positions.sudoku}
-                        setPos={setPos}
-                        size={sizes.sudoku}
-                        setSize={setSize}
-                        minSize={MIN_SIZES.sudoku}
-                        hasToolbar={false}
-                    >
-                        <Sudoku />
-                    </RetroWindow>
+                    {open.sudoku && (
+                        <RetroWindow
+                            id="sudoku"
+                            title="Sudoku • Arcade"
+                            isOpen={open.sudoku}
+                            onClose={() => close("sudoku")}
+                            onFocus={focus}
+                            z={zIndexMap.sudoku || 10}
+                            pos={positions.sudoku}
+                            setPos={setPos}
+                            size={sizes.sudoku}
+                            setSize={setSize}
+                            minSize={MIN_SIZES.sudoku}
+                            hasToolbar={false}
+                        >
+                            <Suspense fallback={<div className="p-4 text-sm">Loading…</div>}>
+                                <Sudoku key={sudokuVersion} />
+                            </Suspense>
+                        </RetroWindow>
+                    )}
+                    
                 </div>
                 <div />
             </div>
