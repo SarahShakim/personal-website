@@ -71,7 +71,6 @@ export default function App() {
     function getDesktopBounds() {
         const el = desktopAreaRef.current;
         if (!el) {
-            // fallback to viewport if ref not ready
             return { w: window.innerWidth || 1440, h: window.innerHeight || 900 };
         }
         const r = el.getBoundingClientRect();
@@ -102,17 +101,14 @@ export default function App() {
     // Responsive behavior: cap sizes & clamp positions when viewport changes
     useEffect(() => {
         function computeCappedSize(id, s, vw, vh) {
-        // Leave some breathing room around windows so borders/handles remain visible
-        const padX = 200; // total horizontal padding
-        const padY = 180; // total vertical padding
-        const maxW = Math.max(MIN_SIZES[id].w, vw - padX);
-        const maxH = Math.max(MIN_SIZES[id].h, vh - padY);
-        return { w: Math.min(s.w, maxW), h: Math.min(s.h, maxH) };
+            const padX = 200; // total horizontal padding
+            const padY = 180; // total vertical padding
+            const maxW = Math.max(MIN_SIZES[id].w, vw - padX);
+            const maxH = Math.max(MIN_SIZES[id].h, vh - padY);
+            return { w: Math.min(s.w, maxW), h: Math.min(s.h, maxH) };
         }
 
         function onResize() {
-            // const vw = window.innerWidth || 1440;
-            // const vh = window.innerHeight || 900;
             const { w: vw, h: vh } = getDesktopBounds();
 
             // First, cap sizes so they don't exceed viewport
@@ -142,7 +138,7 @@ export default function App() {
                 const paintSize = computeCappedSize("paint", DEFAULT_SIZES.paint, vw, vh);
 
                 const desiredX = next.profile.x + profSize.w + gutter;
-                const maxXForPaint = Math.max(0, vw - paintSize.w); // <- no gutter subtraction
+                const maxXForPaint = Math.max(0, vw - paintSize.w);
                 const x = Math.min(desiredX, maxXForPaint);
 
                 const currentPaintY = prev.paint?.y ?? DEFAULT_POSITIONS.paint.y;
@@ -153,7 +149,6 @@ export default function App() {
             });
         }
 
-        // Run once and subscribe
         onResize();
         window.addEventListener("resize", onResize);
         return () => window.removeEventListener("resize", onResize);
