@@ -27,7 +27,7 @@ const MIN_SIZES = {
 
 const DEFAULT_POSITIONS = {
     profile: { x: 40, y: 120 },
-    paint: { x: 540, y: 100 }, // will be moved to the right of profile on mount
+    paint: { x: 540, y: 90 }, // will be moved to the right of profile on mount
     projects: { x: 100, y: 120 }, 
     sudoku: { x: 205, y: 45 }
 };
@@ -38,6 +38,7 @@ function clamp(v, lo, hi) {
 }
 
 export default function App() {
+    const desktopAreaRef = useRef(null);
     const [open, setOpen] = useState({ profile: true, paint: true, projects: false, sudoku: false });
     const [sudokuVersion, setSudokuVersion] = useState(0)
 
@@ -67,17 +68,35 @@ export default function App() {
     };
     const reopen = (id) => { setOpen((o) => ({ ...o, [id]: true })); focus(id); };
 
+    function getDesktopBounds() {
+        const el = desktopAreaRef.current;
+        if (!el) {
+            // fallback to viewport if ref not ready
+            return { w: window.innerWidth || 1440, h: window.innerHeight || 900 };
+        }
+        const r = el.getBoundingClientRect();
+        return { w: r.width, h: r.height };
+    }
+
     // One-time layout: place "paint" to the right of "profile" on mount
     useEffect(() => {
-        const gutter = 24;
-        const vw = window.innerWidth || 1440;
-        setPositions((prev) => {
-        const desiredX = prev.profile.x + sizesRef.current.profile.w + gutter + 20;
-        const maxX = Math.max(0, vw - sizesRef.current.paint.w - gutter);
-        const x = Math.min(desiredX, maxX);
-        return { ...prev, paint: { x, y: prev.profile.y } };
+        const gutter = 80;
+        // run after layout paints to ensure correct measurements
+        requestAnimationFrame(() => {
+            const { w: cw, h: ch } = getDesktopBounds();
+
+            setPositions((prev) => {
+            const desiredX = prev.profile.x + sizesRef.current.profile.w + gutter;
+
+            const maxX = Math.max(0, cw - sizesRef.current.paint.w);
+
+            const x = Math.min(desiredX, maxX);
+            
+            const desiredY = prev.paint?.y ?? DEFAULT_POSITIONS.paint.y;
+            return { ...prev, paint: { x, y: desiredY } };
+            });
         });
-        // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     // Responsive behavior: cap sizes & clamp positions when viewport changes
@@ -92,32 +111,46 @@ export default function App() {
         }
 
         function onResize() {
-        const vw = window.innerWidth || 1440;
-        const vh = window.innerHeight || 900;
+            // const vw = window.innerWidth || 1440;
+            // const vh = window.innerHeight || 900;
+            const { w: vw, h: vh } = getDesktopBounds();
 
-        // First, cap sizes so they don't exceed viewport
-        setSizes((prev) => {
-            const next = { ...prev };
-            for (const id of Object.keys(prev)) {
-            next[id] = computeCappedSize(id, prev[id], vw, vh);
-            }
-            return next;
-        });
+            // First, cap sizes so they don't exceed viewport
+            setSizes((prev) => {
+                const next = { ...prev };
+                for (const id of Object.keys(prev)) {
+                    next[id] = computeCappedSize(id, DEFAULT_SIZES[id], vw, vh);
+                }
+                return next;
+            });
 
-        // Then, clamp positions so windows stay fully visible
-        setPositions((prev) => {
-            const next = { ...prev };
-            for (const id of Object.keys(prev)) {
-            const s = computeCappedSize(id, sizesRef.current[id], vw, vh);
-            const maxX = Math.max(0, vw - s.w);
-            const maxY = Math.max(0, vh - s.h);
-            next[id] = {
-                x: clamp(prev[id].x, 0, maxX),
-                y: clamp(prev[id].y, 0, maxY),
-            };
-            }
-            return next;
-        });
+            // Then, clamp positions so windows stay fully visible
+            setPositions((prev) => {
+                const next = { ...prev };
+                for (const id of Object.keys(prev)) {
+                    const s = computeCappedSize(id, sizesRef.current[id], vw, vh);
+                    const maxX = Math.max(0, vw - s.w);
+                    const maxY = Math.max(0, vh - s.h);
+                    next[id] = {
+                        x: clamp(prev[id].x, 0, maxX),
+                        y: clamp(prev[id].y, 0, maxY),
+                    };
+                }
+
+                const gutter = 80; // your chosen spacing
+                const profSize = computeCappedSize("profile", DEFAULT_SIZES.profile, vw, vh);
+                const paintSize = computeCappedSize("paint", DEFAULT_SIZES.paint, vw, vh);
+
+                const desiredX = next.profile.x + profSize.w + gutter;
+                const maxXForPaint = Math.max(0, vw - paintSize.w); // <- no gutter subtraction
+                const x = Math.min(desiredX, maxXForPaint);
+
+                const currentPaintY = prev.paint?.y ?? DEFAULT_POSITIONS.paint.y;
+                const maxYPaint = Math.max(0, vh - paintSize.h);
+                next.paint = { x, y: clamp(currentPaintY, 0, maxYPaint) };
+
+                return next;
+            });
         }
 
         // Run once and subscribe
@@ -140,7 +173,7 @@ export default function App() {
                         <ApplicationIcon label="Profile pic" onClick={() => reopen("paint")} icon={ProfileApp} />
                     </div>
                 </div>
-                <div className="relative">
+                <div className="relative" ref={desktopAreaRef}>
                     <RetroWindow
                         id="profile"
                         title="Sarah's Profile • Internet"
