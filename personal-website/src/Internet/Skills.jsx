@@ -22,6 +22,8 @@ import GitHubIcon from "../assets/skills/github.png"
 import PowerBIIcon from "../assets/skills/powerbi.png"
 import NetIcon from "../assets/skills/net.png"
 import FlaskIcon from "../assets/skills/flask.png"
+import Snowflake from "../assets/skills/snowflake.png"
+import JavaIcon from "../assets/skills/java.png"
 
 export default function Skills() {
     const allSkills = [
@@ -93,6 +95,10 @@ export default function Skills() {
                 {
                     icon: NodeIcon, 
                     name: "Node.js"
+                }, 
+                {
+                    icon: JavaIcon, 
+                    name: "Java"
                 }
             ]
         }, 
@@ -130,6 +136,10 @@ export default function Skills() {
                 {
                     icon: NetIcon, 
                     name: ".Net"
+                }, 
+                {
+                    icon: Snowflake,
+                    name: "Snowflake"
                 }
             ]
         }

@@ -9,7 +9,8 @@ export default function InternetApplication() {
         "Avid Gamer", 
         "Hackathons", 
         "Experimenting with new tech", 
-        "Baking"
+        "Baking",
+        "Crocheting"
     ]
 
     const relevantCourses = [
