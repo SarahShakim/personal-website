@@ -16,7 +16,9 @@ export default function RetroWindow({
     hasToolbar
 }) {
 
-    const dragRef = useRef({ dragging: false, startX: 0, startY: 0, baseX: 0, baseY: 0 });
+    const dragRef = useRef({ dragging: false, startX: 0, startY: 0, baseX: 0, baseY: 0, lastDx: 0, lastDy: 0 });
+    const windowRef = useRef(null);
+    const rafRef = useRef(0);
 
     const resizeRef = useRef({
         resizing: false,
@@ -34,13 +36,20 @@ export default function RetroWindow({
             // Dragging
             if (dragRef.current.dragging) {
                 const d = dragRef.current;
-                const x = d.baseX + (e.clientX - d.startX);
-                const y = d.baseY + (e.clientY - d.startY);
-                setPos(id, { x, y });
+                d.lastDx = (e.clientX - d.startX);
+                d.lastDy = (e.clientY - d.startY);
+                if (!rafRef.current) {
+                    rafRef.current = requestAnimationFrame(() => {
+                        rafRef.current = 0;
+                        const el = windowRef.current;
+                        if (!el) return;
+                        el.style.willChange = 'transform';
+                        el.style.transform = `translate3d(${d.lastDx}px, ${d.lastDy}px, 0)`;
+                    });
+                }
                 return;
             }
 
-            // Resizing
             const r = resizeRef.current;
             if (!r.resizing) return;
             const dx = e.clientX - r.startX;
@@ -71,28 +80,55 @@ export default function RetroWindow({
         }
 
         function onUp() {
+            const wasDragging = dragRef.current.dragging;
             dragRef.current.dragging = false;
             resizeRef.current.resizing = false;
+
+            if (wasDragging) {
+                const d = dragRef.current;
+                const finalX = d.baseX + d.lastDx;
+                const finalY = d.baseY + d.lastDy;
+                const el = windowRef.current;
+                if (el) {
+                    el.style.transform = '';
+                    el.style.willChange = '';
+                }
+                if (rafRef.current) {
+                    cancelAnimationFrame(rafRef.current);
+                    rafRef.current = 0;
+                }
+                setPos(id, { x: finalX, y: finalY });
+            }
         }
 
-        document.addEventListener("mousemove", onMove);
-        document.addEventListener("mouseup", onUp);
+        document.addEventListener("pointermove", onMove, { passive: true });
+        document.addEventListener("pointerup", onUp, { passive: true });
+        document.addEventListener("pointercancel", onUp, { passive: true });
         return () => {
-            document.removeEventListener("mousemove", onMove);
-            document.removeEventListener("mouseup", onUp);
+            document.removeEventListener("pointermove", onMove);
+            document.removeEventListener("pointerup", onUp);
+            document.removeEventListener("pointercancel", onUp);
         };
     }, [id, setPos, setSize, minSize.w, minSize.h]);
 
     if (!isOpen) return null;
 
     const startDrag = (e) => {
+        if (e.cancelable) e.preventDefault();
+        if (e.pointerType === 'mouse' && e.button !== 0) return;
+        if (e.isPrimary === false) return;
         onFocus(id);
+        if (e.currentTarget?.setPointerCapture && e.pointerId != null) {
+            try { e.currentTarget.setPointerCapture(e.pointerId); } catch {}
+        }
         dragRef.current = {
             dragging: true,
             startX: e.clientX,
             startY: e.clientY,
             baseX: pos.x,
             baseY: pos.y,
+            lastDx: 0,
+            lastDy: 0,
         };
     };
 
@@ -100,16 +136,17 @@ export default function RetroWindow({
         <div
             role="dialog"
             aria-label={title}
-            onMouseDown={() => onFocus(id)}
+            onPointerDown={() => onFocus(id)}
             className="absolute shadow-2xl border border-black/40 bg-[#EDEDED] rounded-sm overflow-hidden select-none font-mono"
+            ref={windowRef}
             style={{ zIndex: z, width: size.w, height: size.h, left: pos.x, top: pos.y }}
         >
             {/* Make the window body a column flex container */}
             <div className="flex h-full flex-col">
                 {/* Title bar (drag handle) */}
                 <div
-                    className="flex items-center justify-between px-3 py-1 bg-gradient-to-r from-[#6c5ce7] to-[#a29bfe] text-white text-sm cursor-move font-bold tracking-wider shrink-0"
-                    onMouseDown={startDrag}
+                    className="flex items-center justify-between px-3 py-1 bg-gradient-to-r from-[#6c5ce7] to-[#a29bfe] text-white text-sm cursor-move font-bold tracking-wider shrink-0 touch-none select-none"
+                    onPointerDown={startDrag}
                 >
                     <div className="font-semibold tracking-wide">
                         {title}

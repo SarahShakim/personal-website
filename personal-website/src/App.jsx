@@ -19,14 +19,14 @@ const DEFAULT_SIZES = {
 };
 
 const MIN_SIZES = {
-    profile: { w: 600, h: 320 },
+    profile: { w: 600, h: 400 },
     paint: { w: 480, h: 320 },
     projects: { w: 520, h: 320 },
     sudoku: { w: 560, h: 560 },
 };
 
 const DEFAULT_POSITIONS = {
-    profile: { x: 40, y: 120 },
+    profile: { x: 40, y: 60 },
     paint: { x: 540, y: 90 }, // will be moved to the right of profile on mount
     projects: { x: 100, y: 120 }, 
     sudoku: { x: 205, y: 45 }
