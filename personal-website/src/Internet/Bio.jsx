@@ -5,11 +5,11 @@ import Education from "./Education";
 
 export default function Bio() {
     return (
-        <div className="bg-[#f7c2a7] p-6">
-            <div className="grid grid-cols-1 xl:grid-cols-[0.8fr_1.5fr_1fr] gap-6">
+        <div className="bg-[#f7c2a7] p-6 about-container">
+            <div className="grid gap-6 bio-grid">
                 <Contact />
                 <AboutMe />
-                <div className="flex items-center justify-center ml-4">
+                <div className="flex items-center justify-center ml-3">
                     <Education />
                 </div>
             </div>
