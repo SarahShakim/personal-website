@@ -3,8 +3,12 @@ import profilePic from "../assets/SHA_3678.JPG";
 
 export default function ProfilePicture() {
     return (
-        <div className="w-72 h-90 mb-15 bg-gradient-to-b from-[#fff] to-[#f0f0f0] border grid place-items-center">
-            <img src={profilePic} alt="Profile" className="w-72 h-90 object-cover border" />
+        <div className="flex items-center justify-center p-2 rounded-sm">
+            <img
+                src={profilePic}
+                alt="Profile"
+                className="w-full h-auto object-contain border max-w-[360px] md:max-w-[290px] border-2"
+            />
         </div>
     );
 }
