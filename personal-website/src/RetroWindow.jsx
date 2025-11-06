@@ -114,10 +114,11 @@ export default function RetroWindow({
     if (!isOpen) return null;
 
     const startDrag = (e) => {
-        if (e.cancelable) e.preventDefault();
+        if (e.target && typeof e.target.closest === 'function' && e.target.closest('[data-no-drag]')) return;
         if (e.pointerType === 'mouse' && e.button !== 0) return;
         if (e.isPrimary === false) return;
         onFocus(id);
+        if (e.cancelable) e.preventDefault();
         if (e.currentTarget?.setPointerCapture && e.pointerId != null) {
             try { e.currentTarget.setPointerCapture(e.pointerId); } catch {}
         }
@@ -154,6 +155,7 @@ export default function RetroWindow({
                     <div className="flex gap-1">
                         <button
                             aria-label="Close"
+                            data-no-drag
                             onClick={onClose}
                             className="w-5 h-5 grid place-items-center bg-white/20 hover:bg-red-500 rounded-sm border border-white/30"
                         >
