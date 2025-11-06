@@ -19,7 +19,7 @@ const DEFAULT_SIZES = {
 };
 
 const MIN_SIZES = {
-    profile: { w: 600, h: 400 },
+    profile: { w: 600, h: 550 },
     paint: { w: 480, h: 320 },
     projects: { w: 520, h: 320 },
     sudoku: { w: 560, h: 560 },
