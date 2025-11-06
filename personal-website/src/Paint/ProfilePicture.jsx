@@ -7,7 +7,7 @@ export default function ProfilePicture() {
             <img
                 src={profilePic}
                 alt="Profile"
-                className="w-full h-auto object-contain border max-w-[220px] md:max-w-[270px] max-h-[40vh] md:max-h-[50vh] border-2"
+                className="w-full h-auto object-contain border max-w-[220px] md:max-w-[270px] max-h-[40vh] md:max-h-[45vh] border-2"
             />
         </div>
     );
