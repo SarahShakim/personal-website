@@ -19,8 +19,8 @@ const DEFAULT_SIZES = {
 };
 
 const MIN_SIZES = {
-    profile: { w: 600, h: 550 },
-    paint: { w: 480, h: 320 },
+    profile: { w: 600, h: 520 },
+    paint: { w: 450, h: 320 },
     projects: { w: 520, h: 320 },
     sudoku: { w: 560, h: 560 },
 };
@@ -85,14 +85,14 @@ export default function App() {
             const { w: cw, h: ch } = getDesktopBounds();
 
             setPositions((prev) => {
-            const desiredX = prev.profile.x + sizesRef.current.profile.w + gutter;
+                const desiredX = prev.profile.x + sizesRef.current.profile.w + gutter;
 
-            const maxX = Math.max(0, cw - sizesRef.current.paint.w);
+                const maxX = Math.max(0, cw - sizesRef.current.paint.w);
 
-            const x = Math.min(desiredX, maxX);
-            
-            const desiredY = prev.paint?.y ?? DEFAULT_POSITIONS.paint.y;
-            return { ...prev, paint: { x, y: desiredY } };
+                const x = Math.min(desiredX, maxX);
+                
+                const desiredY = prev.paint?.y ?? DEFAULT_POSITIONS.paint.y;
+                return { ...prev, paint: { x, y: desiredY } };
             });
         });
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -155,9 +155,9 @@ export default function App() {
     }, []);
 
     return (
-        <div className="w-screen h-screen relative overflow-hidden font-mono text-sm">
+        <div className="w-[100dvw] h-[100dvh] relative overflow-hidden font-mono text-sm">
             <div className="absolute inset-0 bg-gradient-to-b from-[#bde0fe] via-[#cdb4db] to-[#ffc8dd]" />
-            <div className="absolute inset-0 p-6 grid grid-cols-[120px_1fr_120px] gap-4">
+            <div className="absolute inset-0 p-6 pb-[calc(1.5rem+env(safe-area-inset-bottom))] grid grid-cols-[120px_1fr_120px] gap-4">
                 <div className="flex flex-col justify-between items-center py-6">
                     <div className="flex flex-col gap-6">
                         <ApplicationIcon label="Projects" onClick={() => reopen("projects")} icon={FileApp}/>
