@@ -32,7 +32,6 @@ const DEFAULT_POSITIONS = {
     sudoku: { x: 205, y: 45 }
 };
 
-// Helper to clamp numbers
 function clamp(v, lo, hi) {
     return Math.max(lo, Math.min(hi, v));
 }
@@ -42,19 +41,15 @@ export default function App() {
     const [open, setOpen] = useState({ profile: true, paint: true, projects: false, sudoku: false });
     const [sudokuVersion, setSudokuVersion] = useState(0)
 
-    // positions per window
     const [positions, setPositions] = useState({ ...DEFAULT_POSITIONS });
     const setPos = (id, p) => setPositions((cur) => ({ ...cur, [id]: { ...cur[id], ...p } }));
 
-    // sizes per window
     const [sizes, setSizes] = useState({ ...DEFAULT_SIZES });
     const setSize = (id, s) => setSizes((cur) => ({ ...cur, [id]: { ...cur[id], ...s } }));
 
-    // keep a ref of sizes for consistent resize math
     const sizesRef = useRef(sizes);
     useEffect(() => { sizesRef.current = sizes; }, [sizes]);
 
-    // bring-to-front ordering
     const [order, setOrder] = useState(["profile", "paint", "projects", "sudoku"]);
     const zIndexMap = useMemo(() => {
         const base = 10;
@@ -77,10 +72,8 @@ export default function App() {
         return { w: r.width, h: r.height };
     }
 
-    // One-time layout: place "paint" to the right of "profile" on mount
     useEffect(() => {
         const gutter = 80;
-        // run after layout paints to ensure correct measurements
         requestAnimationFrame(() => {
             const { w: cw, h: ch } = getDesktopBounds();
 
@@ -98,7 +91,6 @@ export default function App() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
-    // Responsive behavior: cap sizes & clamp positions when viewport changes
     useEffect(() => {
         function computeCappedSize(id, s, vw, vh) {
             const padX = 200; // total horizontal padding
@@ -120,7 +112,6 @@ export default function App() {
                 return next;
             });
 
-            // Then, clamp positions so windows stay fully visible
             setPositions((prev) => {
                 const next = { ...prev };
                 for (const id of Object.keys(prev)) {
@@ -133,7 +124,7 @@ export default function App() {
                     };
                 }
 
-                const gutter = 80; // your chosen spacing
+                const gutter = 80;
                 const profSize = computeCappedSize("profile", DEFAULT_SIZES.profile, vw, vh);
                 const paintSize = computeCappedSize("paint", DEFAULT_SIZES.paint, vw, vh);
 
@@ -160,12 +151,12 @@ export default function App() {
             <div className="absolute inset-0 p-6 pb-[calc(1.5rem+env(safe-area-inset-bottom))] grid grid-cols-[120px_1fr_120px] gap-4">
                 <div className="flex flex-col justify-between items-center py-6">
                     <div className="flex flex-col gap-6">
-                        <ApplicationIcon label="Projects" onClick={() => reopen("projects")} icon={FileApp}/>
                         <ApplicationIcon label="Sarah's Profile" onClick={() => reopen("profile")} icon={WorldApp}/>
+                        <ApplicationIcon label="Profile pic" onClick={() => reopen("paint")} icon={ProfileApp} />
                     </div>
                     <div className="flex flex-col gap-6">
+                        <ApplicationIcon label="Projects" onClick={() => reopen("projects")} icon={FileApp}/>
                         <ApplicationIcon label="Sudoku" onClick={() => reopen("sudoku")} icon={ArcadeApp}/>
-                        <ApplicationIcon label="Profile pic" onClick={() => reopen("paint")} icon={ProfileApp} />
                     </div>
                 </div>
                 <div className="relative" ref={desktopAreaRef}>
