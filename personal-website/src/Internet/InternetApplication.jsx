@@ -26,12 +26,14 @@ export default function InternetApplication() {
         <div className="h-full flex flex-col bg-white">
             <Bio />
             <Skills />
-            <div className="h-full grid grid-cols-[320px_1fr] mt-4">
-                <div className="p-5 bg-[#eafaf1] border-r border-t">
-                    <PersonalCards title="Hobbies & Interests" listItems={hobbies}/>
-                    <PersonalCards title="Relevant Courses" listItems={relevantCourses} additionalCard={true}/>
+            <div className="h-full grid grid-cols-1 xl:grid-cols-[320px_1fr] mt-4">
+                <div className="order-2 xl:order-1 p-5 bg-[#eafaf1] xl:border-r border-t">
+                    <PersonalCards title="Hobbies & Interests" listItems={hobbies} />
+                    <PersonalCards title="Relevant Courses" listItems={relevantCourses} additionalCard={true} />
                 </div>
-                <WorkExperience />
+                <div className="order-1 xl:order-2">
+                    <WorkExperience />
+                </div>
             </div>
         </div>
     );
