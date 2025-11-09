@@ -39,6 +39,10 @@ function clamp(v, lo, hi) {
 export default function App() {
     const desktopAreaRef = useRef(null);
     const [open, setOpen] = useState({ profile: true, paint: true, projects: false, sudoku: false });
+    // Compact mode: below iPad mini (~744px)
+    const initialIsCompact = typeof window !== 'undefined' && window.matchMedia('(max-width: 743px)').matches;
+    const [isCompact, setIsCompact] = useState(initialIsCompact);
+    const [compactActive, setCompactActive] = useState("profile"); // 'profile' | 'projects'
     const [sudokuVersion, setSudokuVersion] = useState(0)
 
     const [positions, setPositions] = useState({ ...DEFAULT_POSITIONS });
@@ -89,6 +93,15 @@ export default function App() {
             });
         });
     // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+
+    // Track compact breakpoint changes
+    useEffect(() => {
+        const mq = window.matchMedia('(max-width: 743px)');
+        const handler = (e) => setIsCompact(e.matches);
+        setIsCompact(mq.matches);
+        mq.addEventListener?.('change', handler);
+        return () => mq.removeEventListener?.('change', handler);
     }, []);
 
     useEffect(() => {
@@ -144,6 +157,28 @@ export default function App() {
         window.addEventListener("resize", onResize);
         return () => window.removeEventListener("resize", onResize);
     }, []);
+
+    // Compact layout: top icons row (Profile, Projects) with fullscreen content below
+    if (isCompact) {
+        return (
+            <div className="w-[100dvw] h-[100dvh] relative overflow-hidden font-mono text-sm">
+                <div className="absolute inset-0 bg-gradient-to-b from-[#bde0fe] via-[#cdb4db] to-[#ffc8dd]" />
+                <div className="absolute inset-0 p-4 pb-[calc(1rem+env(safe-area-inset-bottom))] flex flex-col gap-4">
+                    <div className="flex items-center justify-center gap-6">
+                        <ApplicationIcon label="Sarah's Profile" onClick={() => setCompactActive('profile')} icon={WorldApp} />
+                        <ApplicationIcon label="Projects" onClick={() => setCompactActive('projects')} icon={FileApp} />
+                    </div>
+                    <div className="flex-1 min-h-0 rounded-md overflow-auto">
+                        {compactActive === 'profile' ? (
+                            <InternetApplication />
+                        ) : (
+                            <PersonalProjects />
+                        )}
+                    </div>
+                </div>
+            </div>
+        );
+    }
 
     return (
         <div className="w-[100dvw] h-[100dvh] relative overflow-hidden font-mono text-sm">
