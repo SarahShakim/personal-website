@@ -168,7 +168,7 @@ export default function App() {
                         <ApplicationIcon label="Sarah's Profile" onClick={() => setCompactActive('profile')} icon={WorldApp} />
                         <ApplicationIcon label="Projects" onClick={() => setCompactActive('projects')} icon={FileApp} />
                     </div>
-                    <div className="flex-1 min-h-0 rounded-md overflow-auto">
+                    <div className="flex-1 min-h-0 bg-white rounded-md overflow-auto">
                         {compactActive === 'profile' ? (
                             <InternetApplication />
                         ) : (
