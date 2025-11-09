@@ -169,10 +169,43 @@ export default function App() {
                         <ApplicationIcon label="Projects" onClick={() => setCompactActive('projects')} icon={FileApp} />
                     </div>
                     <div className="flex-1 min-h-0 bg-white rounded-md overflow-auto">
-                        {compactActive === 'profile' ? (
-                            <InternetApplication />
-                        ) : (
-                            <PersonalProjects />
+                        {compactActive === 'profile' && (
+                            <RetroWindow
+                                id="compact-profile"
+                                title={"Sarah's Profile - Internet"}
+                                isOpen={true}
+                                onClose={() => setCompactActive(null)}
+                                onFocus={() => {}}
+                                z={1}
+                                pos={{ x: 0, y: 0 }}
+                                setPos={() => {}}
+                                size={{ w: 0, h: 0 }}
+                                setSize={() => {}}
+                                minSize={{ w: 300, h: 300 }}
+                                hasToolbar={true}
+                                isCompact={true}
+                            >
+                                <InternetApplication />
+                            </RetroWindow>
+                        )}
+                        {compactActive === 'projects' && (
+                            <RetroWindow
+                                id="compact-projects"
+                                title={"C:\\Projects"}
+                                isOpen={true}
+                                onClose={() => setCompactActive(null)}
+                                onFocus={() => {}}
+                                z={1}
+                                pos={{ x: 0, y: 0 }}
+                                setPos={() => {}}
+                                size={{ w: 0, h: 0 }}
+                                setSize={() => {}}
+                                minSize={{ w: 300, h: 300 }}
+                                hasToolbar={false}
+                                isCompact={true}
+                            >
+                                <PersonalProjects />
+                            </RetroWindow>
                         )}
                     </div>
                 </div>
@@ -208,6 +241,7 @@ export default function App() {
                         setSize={setSize}
                         minSize={MIN_SIZES.profile}
                         hasToolbar={true}
+                        isCompact={false}
                     >
                         <InternetApplication />
                     </RetroWindow>
@@ -225,6 +259,7 @@ export default function App() {
                         setSize={setSize}
                         minSize={MIN_SIZES.paint}
                         hasToolbar={false}
+                        isCompact={false}
                     >
                         <PaintApplication />
                     </RetroWindow>
@@ -242,6 +277,7 @@ export default function App() {
                         setSize={setSize}
                         minSize={MIN_SIZES.projects}
                         hasToolbar={false}
+                        isCompact={false}
                     >   
                         <PersonalProjects />
                     </RetroWindow>
@@ -259,6 +295,7 @@ export default function App() {
                             setSize={setSize}
                             minSize={MIN_SIZES.sudoku}
                             hasToolbar={false}
+                            isCompact={false}
                         >
                             <Suspense fallback={<div className="p-4 text-sm">Loading…</div>}>
                                 <Sudoku key={sudokuVersion} />
