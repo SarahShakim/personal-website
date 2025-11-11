@@ -23,6 +23,7 @@ export default function Sudoku({ className = "" }) {
             onLoad={() => setLoaded(true)}
         />
         <div className="flex">
+            <span className="absolute left-2 top-2 text-[13px] px-2 py-1 font-bold">Note: This will only work on a PC</span>
             <a
                 href={`https://github.com/SarahShakim/sudoku`}
                 target="_blank"
