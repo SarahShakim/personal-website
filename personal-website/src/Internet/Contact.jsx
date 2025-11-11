@@ -3,6 +3,7 @@ import React from "react";
 export default function Contact() {
     const linkedinUrl = 'https://www.linkedin.com/in/sarah-shakim/'
     const githubUrl = 'https://github.com/sarahshakim'
+    const resumeHref = '/Sarah-Shakim-resume.pdf'
     return (
         <div className="bg-[#f7c2a7]">
             <div className="text-3xl font-extrabold leading-none">Sarah<br/>Shakim</div>
@@ -48,6 +49,34 @@ export default function Contact() {
                         rel="noopener noreferrer"
                     >
                         {githubUrl.replace(/^https?:\/\//, '')}
+                    </a>
+                </div>
+                <div className="flex items-center gap-3 ml-1">
+                    <span className="w-5.5 h-5 rounded-sm bg-[#ffffff] grid place-items-center">
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 24 24"
+                            className="w-3.5 h-3.5 text-white"
+                            aria-hidden="true"
+                            fill="none"
+                            stroke="black"
+                            strokeWidth="2"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                        >
+                            <rect x="5" y="3" width="15" height="18" rx="2" ry="2" />
+                            <line x1="8" y1="8" x2="16" y2="8" />
+                            <line x1="8" y1="12" x2="16" y2="12" />
+                            <line x1="8" y1="16" x2="13.5" y2="16" />
+                        </svg>
+                    </span>
+                    <a
+                        href={resumeHref}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        aria-label="View resume as PDF"
+                    >
+                        Resume
                     </a>
                 </div>
             </div>

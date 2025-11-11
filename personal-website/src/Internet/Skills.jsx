@@ -24,6 +24,9 @@ import NetIcon from "../assets/skills/net.png"
 import FlaskIcon from "../assets/skills/flask.png"
 import Snowflake from "../assets/skills/snowflake.png"
 import JavaIcon from "../assets/skills/java.png"
+import JiraIcon from "../assets/skills/jira.svg"
+import SSMSIcon from "../assets/skills/ssms.jpg"
+import AlationIcon from "../assets/skills/alation.png"
 
 export default function Skills() {
     const allSkills = [
@@ -99,6 +102,10 @@ export default function Skills() {
                 {
                     icon: JavaIcon, 
                     name: "Java"
+                },
+                {
+                    icon: NetIcon, 
+                    name: ".Net"
                 }
             ]
         }, 
@@ -134,12 +141,20 @@ export default function Skills() {
                     name: "Power BI"
                 }, 
                 {
-                    icon: NetIcon, 
-                    name: ".Net"
-                }, 
-                {
                     icon: Snowflake,
                     name: "Snowflake"
+                }, 
+                {
+                    icon: JiraIcon, 
+                    name: "Jira"
+                },
+                {
+                    icon: SSMSIcon, 
+                    name: "SSMS"
+                },
+                {
+                    icon: AlationIcon, 
+                    name: "Alation"
                 }
             ]
         }
