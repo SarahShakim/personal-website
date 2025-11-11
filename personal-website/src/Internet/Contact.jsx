@@ -9,11 +9,11 @@ export default function Contact() {
             <div className="text-3xl font-extrabold leading-none">Sarah<br/>Shakim</div>
 
             <div className="mt-4 space-y-3 text-sm text-black">
-                <div className="flex items-center gap-3">
+                <div className="flex items-center gap-3 mb-1">
                     <span className="text-lg">📍</span>
                     <span>Toronto, ON</span>
                 </div>
-                <div className="flex items-center gap-3">
+                <div className="flex items-center gap-3 mb-1">
                     <span className="text-lg">📱</span>
                     <span>(647) 772 - 7216</span>
                 </div>
