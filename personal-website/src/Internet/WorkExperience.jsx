@@ -8,9 +8,9 @@ export default function WorkExperience() {
             company: "AMD",
             timePeriod: "Jun 2024 - Present", 
             points: [
+                "Architected ETL pipelines processing millions of records with Python and Snowflake, generating function inventories and code coverage metrics to identify gaps and improve GPU software test coverage",
                 "Built an AI-driven test case validation app in Python leveraging OpenAI, enabling automated detection of ambiguous test steps and reducing delivery cycle time by 25%", 
-                "Designed scalable data pipelines and dashboards using SQL and PowerBI that provided actionable insights across teams, including an AI adoption tracker now used company-wide by leadership", 
-                "Architected and executed the migration from SQL Server to Snowflake, achieving 80% faster query performance and enabling scalable, cloud-native analytics and reporting"
+                "Designed scalable data pipelines and dashboards using SQL and PowerBI that provided actionable insights across teams, including an AI adoption tracker now used company-wide by leadership"
             ]
         },
         {
