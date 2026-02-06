@@ -13,10 +13,13 @@ export default function RetroWindow({
     size,
     setSize,
     minSize,
-    hasToolbar
+    hasToolbar, 
+    isCompact
 }) {
 
-    const dragRef = useRef({ dragging: false, startX: 0, startY: 0, baseX: 0, baseY: 0 });
+    const dragRef = useRef({ dragging: false, startX: 0, startY: 0, baseX: 0, baseY: 0, lastDx: 0, lastDy: 0 });
+    const windowRef = useRef(null);
+    const rafRef = useRef(0);
 
     const resizeRef = useRef({
         resizing: false,
@@ -30,69 +33,107 @@ export default function RetroWindow({
     });
 
     useEffect(() => {
-        function onMove(e) {
-            // Dragging
-            if (dragRef.current.dragging) {
-                const d = dragRef.current;
-                const x = d.baseX + (e.clientX - d.startX);
-                const y = d.baseY + (e.clientY - d.startY);
-                setPos(id, { x, y });
-                return;
+        if (!isCompact) {
+            function onMove(e) {
+                // Dragging
+                if (dragRef.current.dragging) {
+                    const d = dragRef.current;
+                    d.lastDx = (e.clientX - d.startX);
+                    d.lastDy = (e.clientY - d.startY);
+                    if (!rafRef.current) {
+                        rafRef.current = requestAnimationFrame(() => {
+                            rafRef.current = 0;
+                            const el = windowRef.current;
+                            if (!el) return;
+                            el.style.willChange = 'transform';
+                            el.style.transform = `translate3d(${d.lastDx}px, ${d.lastDy}px, 0)`;
+                        });
+                    }
+                    return;
+                }
+
+                const r = resizeRef.current;
+                if (!r.resizing) return;
+                const dx = e.clientX - r.startX;
+                const dy = e.clientY - r.startY;
+
+                let newW = r.startW;
+                let newH = r.startH;
+                let newL = r.startL;
+                let newT = r.startT;
+
+                const edge = r.edge;
+                // Horizontal
+                if (edge.includes("e")) newW = Math.max(minSize.w, r.startW + dx);
+                if (edge.includes("w")) {
+                    const w = Math.max(minSize.w, r.startW - dx);
+                    newL = r.startL + (r.startW - w);
+                    newW = w;
+                }
+                // Vertical
+                if (edge.includes("s")) newH = Math.max(minSize.h, r.startH + dy);
+                if (edge.includes("n")) {
+                    const h = Math.max(minSize.h, r.startH - dy);
+                    newT = r.startT + (r.startH - h);
+                    newH = h;
+                }
+                setPos(id, { x: newL, y: newT });
+                setSize(id, { w: newW, h: newH });
             }
 
-            // Resizing
-            const r = resizeRef.current;
-            if (!r.resizing) return;
-            const dx = e.clientX - r.startX;
-            const dy = e.clientY - r.startY;
+            function onUp() {
+                const wasDragging = dragRef.current.dragging;
+                dragRef.current.dragging = false;
+                resizeRef.current.resizing = false;
 
-            let newW = r.startW;
-            let newH = r.startH;
-            let newL = r.startL;
-            let newT = r.startT;
+                if (wasDragging) {
+                    const d = dragRef.current;
+                    const finalX = d.baseX + d.lastDx;
+                    const finalY = d.baseY + d.lastDy;
+                    const el = windowRef.current;
+                    if (el) {
+                        el.style.transform = '';
+                        el.style.willChange = '';
+                    }
+                    if (rafRef.current) {
+                        cancelAnimationFrame(rafRef.current);
+                        rafRef.current = 0;
+                    }
+                    setPos(id, { x: finalX, y: finalY });
+                }
+            }
 
-            const edge = r.edge;
-            // Horizontal
-            if (edge.includes("e")) newW = Math.max(minSize.w, r.startW + dx);
-            if (edge.includes("w")) {
-                const w = Math.max(minSize.w, r.startW - dx);
-                newL = r.startL + (r.startW - w);
-                newW = w;
-            }
-            // Vertical
-            if (edge.includes("s")) newH = Math.max(minSize.h, r.startH + dy);
-            if (edge.includes("n")) {
-                const h = Math.max(minSize.h, r.startH - dy);
-                newT = r.startT + (r.startH - h);
-                newH = h;
-            }
-            setPos(id, { x: newL, y: newT });
-            setSize(id, { w: newW, h: newH });
+            document.addEventListener("pointermove", onMove, { passive: true });
+            document.addEventListener("pointerup", onUp, { passive: true });
+            document.addEventListener("pointercancel", onUp, { passive: true });
+            return () => {
+                document.removeEventListener("pointermove", onMove);
+                document.removeEventListener("pointerup", onUp);
+                document.removeEventListener("pointercancel", onUp);
+            };
         }
-
-        function onUp() {
-            dragRef.current.dragging = false;
-            resizeRef.current.resizing = false;
-        }
-
-        document.addEventListener("mousemove", onMove);
-        document.addEventListener("mouseup", onUp);
-        return () => {
-            document.removeEventListener("mousemove", onMove);
-            document.removeEventListener("mouseup", onUp);
-        };
-    }, [id, setPos, setSize, minSize.w, minSize.h]);
+    }, [id, setPos, setSize, minSize.w, minSize.h, isCompact]);
 
     if (!isOpen) return null;
 
     const startDrag = (e) => {
+        if (isCompact) return;
+        if (e.target && typeof e.target.closest === 'function' && e.target.closest('[data-no-drag]')) return;
+        if (e.pointerType === 'mouse' && e.button !== 0) return;
+        if (e.isPrimary === false) return;
         onFocus(id);
+        if (e.cancelable) e.preventDefault();
+        if (e.currentTarget?.setPointerCapture && e.pointerId != null) {
+            try { e.currentTarget.setPointerCapture(e.pointerId); } catch {}
+        }
         dragRef.current = {
             dragging: true,
             startX: e.clientX,
             startY: e.clientY,
             baseX: pos.x,
             baseY: pos.y,
+            lastDx: 0,
+            lastDy: 0,
         };
     };
 
@@ -100,28 +141,32 @@ export default function RetroWindow({
         <div
             role="dialog"
             aria-label={title}
-            onMouseDown={() => onFocus(id)}
-            className="absolute shadow-2xl border border-black/40 bg-[#EDEDED] rounded-sm overflow-hidden select-none font-mono"
-            style={{ zIndex: z, width: size.w, height: size.h, left: pos.x, top: pos.y }}
+            onPointerDown={() => onFocus(id)}
+            className={`${isCompact ? 'w-full h-full' : 'absolute'} shadow-2xl border border-black/40 bg-[#EDEDED] rounded-sm overflow-hidden select-none font-mono`}
+            ref={windowRef}
+            style={{ zIndex: z, ...(isCompact ? {} : { width: size.w, height: size.h, left: pos.x, top: pos.y }) }}
         >
             {/* Make the window body a column flex container */}
             <div className="flex h-full flex-col">
                 {/* Title bar (drag handle) */}
                 <div
-                    className="flex items-center justify-between px-3 py-1 bg-gradient-to-r from-[#6c5ce7] to-[#a29bfe] text-white text-sm cursor-move font-bold tracking-wider shrink-0"
-                    onMouseDown={startDrag}
+                    className={`flex items-center justify-between px-3 py-1 bg-gradient-to-r from-[#6c5ce7] to-[#a29bfe] text-white text-sm font-bold tracking-wider shrink-0 touch-none select-none ${isCompact ? '' : 'cursor-move'}`}
+                    onPointerDown={startDrag}
                 >
                     <div className="font-semibold tracking-wide">
                         {title}
                     </div>
                     <div className="flex gap-1">
-                        <button
-                            aria-label="Close"
-                            onClick={onClose}
-                            className="w-5 h-5 grid place-items-center bg-white/20 hover:bg-red-500 rounded-sm border border-white/30"
-                        >
-                        <span className="-mt-0.5">×</span>
-                        </button>
+                        {!isCompact &&
+                            <button
+                                aria-label="Close"
+                                data-no-drag
+                                onClick={onClose}
+                                className="w-5 h-5 grid place-items-center bg-white/20 hover:bg-red-500 rounded-sm border border-white/30"
+                            >
+                            <span className="-mt-0.5">×</span>
+                            </button>
+                        }
                     </div>
                 </div>
 

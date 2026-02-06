@@ -22,6 +22,11 @@ import GitHubIcon from "../assets/skills/github.png"
 import PowerBIIcon from "../assets/skills/powerbi.png"
 import NetIcon from "../assets/skills/net.png"
 import FlaskIcon from "../assets/skills/flask.png"
+import Snowflake from "../assets/skills/snowflake.png"
+import JavaIcon from "../assets/skills/java.png"
+import JiraIcon from "../assets/skills/jira.svg"
+import SSMSIcon from "../assets/skills/ssms.jpg"
+import AlationIcon from "../assets/skills/alation.png"
 
 export default function Skills() {
     const allSkills = [
@@ -93,6 +98,14 @@ export default function Skills() {
                 {
                     icon: NodeIcon, 
                     name: "Node.js"
+                }, 
+                {
+                    icon: JavaIcon, 
+                    name: "Java"
+                },
+                {
+                    icon: NetIcon, 
+                    name: ".Net"
                 }
             ]
         }, 
@@ -128,8 +141,20 @@ export default function Skills() {
                     name: "Power BI"
                 }, 
                 {
-                    icon: NetIcon, 
-                    name: ".Net"
+                    icon: Snowflake,
+                    name: "Snowflake"
+                }, 
+                {
+                    icon: JiraIcon, 
+                    name: "Jira"
+                },
+                {
+                    icon: SSMSIcon, 
+                    name: "SSMS"
+                },
+                {
+                    icon: AlationIcon, 
+                    name: "Alation"
                 }
             ]
         }
@@ -142,7 +167,7 @@ export default function Skills() {
             </h3>
 
             {allSkills.map((skillType, item) => (
-                <div key={item} className="grid grid-cols-[110px_1fr] gap-4 mb-6 text-base">
+                <div key={item} className="grid grid-cols-[110px_1fr] gap-4 mb-6 text-[16px]">
                     <div className="text-[#6c5ce7] font-extrabold">{skillType.name}:</div>
                     <div className="flex flex-wrap gap-x-8 gap-y-5">
                         {skillType.skills.map((skill, i) => (

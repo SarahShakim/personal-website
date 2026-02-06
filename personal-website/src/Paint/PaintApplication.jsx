@@ -7,7 +7,7 @@ export default function PaintApplication() {
     return (
         <div className="h-full grid grid-cols-[100px_1fr]">
             <PaintIcons />
-            <div className="relative bg-[#c0c0c07a] grid place-items-center">
+            <div className="relative bg-[#c0c0c07a] grid place-items-center pb-[72px]">
                 <ProfilePicture />
                 <PaintColors />
             </div>

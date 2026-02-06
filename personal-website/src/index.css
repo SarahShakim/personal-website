@@ -1,1 +1,9 @@
 @import "tailwindcss";
+
+.about-container { container-type: inline-size; }
+
+.bio-grid { grid-template-columns: 1fr; }
+
+@container (min-width: 792px) {
+  .bio-grid { grid-template-columns: 0.8fr 1.5fr 1fr; }
+}

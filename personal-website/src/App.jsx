@@ -19,41 +19,41 @@ const DEFAULT_SIZES = {
 };
 
 const MIN_SIZES = {
-    profile: { w: 520, h: 320 },
-    paint: { w: 480, h: 320 },
+    profile: { w: 600, h: 500 },
+    paint: { w: 450, h: 320 },
     projects: { w: 520, h: 320 },
     sudoku: { w: 560, h: 560 },
 };
 
 const DEFAULT_POSITIONS = {
-    profile: { x: 40, y: 120 },
-    paint: { x: 540, y: 100 }, // will be moved to the right of profile on mount
+    profile: { x: 40, y: 40 },
+    paint: { x: 540, y: 90 }, // will be moved to the right of profile on mount
     projects: { x: 100, y: 120 }, 
     sudoku: { x: 205, y: 45 }
 };
 
-// Helper to clamp numbers
 function clamp(v, lo, hi) {
     return Math.max(lo, Math.min(hi, v));
 }
 
 export default function App() {
+    const desktopAreaRef = useRef(null);
     const [open, setOpen] = useState({ profile: true, paint: true, projects: false, sudoku: false });
+    // Compact mode: below iPad mini (~744px)
+    const initialIsCompact = typeof window !== 'undefined' && window.matchMedia('(max-width: 743px)').matches;
+    const [isCompact, setIsCompact] = useState(initialIsCompact);
+    const [compactActive, setCompactActive] = useState("profile"); // 'profile' | 'projects'
     const [sudokuVersion, setSudokuVersion] = useState(0)
 
-    // positions per window
     const [positions, setPositions] = useState({ ...DEFAULT_POSITIONS });
     const setPos = (id, p) => setPositions((cur) => ({ ...cur, [id]: { ...cur[id], ...p } }));
 
-    // sizes per window
     const [sizes, setSizes] = useState({ ...DEFAULT_SIZES });
     const setSize = (id, s) => setSizes((cur) => ({ ...cur, [id]: { ...cur[id], ...s } }));
 
-    // keep a ref of sizes for consistent resize math
     const sizesRef = useRef(sizes);
     useEffect(() => { sizesRef.current = sizes; }, [sizes]);
 
-    // bring-to-front ordering
     const [order, setOrder] = useState(["profile", "paint", "projects", "sudoku"]);
     const zIndexMap = useMemo(() => {
         const base = 10;
@@ -67,80 +67,167 @@ export default function App() {
     };
     const reopen = (id) => { setOpen((o) => ({ ...o, [id]: true })); focus(id); };
 
-    // One-time layout: place "paint" to the right of "profile" on mount
+    function getDesktopBounds() {
+        const el = desktopAreaRef.current;
+        if (!el) {
+            return { w: window.innerWidth || 1440, h: window.innerHeight || 900 };
+        }
+        const r = el.getBoundingClientRect();
+        return { w: r.width, h: r.height };
+    }
+
     useEffect(() => {
-        const gutter = 24;
-        const vw = window.innerWidth || 1440;
-        setPositions((prev) => {
-        const desiredX = prev.profile.x + sizesRef.current.profile.w + gutter + 20;
-        const maxX = Math.max(0, vw - sizesRef.current.paint.w - gutter);
-        const x = Math.min(desiredX, maxX);
-        return { ...prev, paint: { x, y: prev.profile.y } };
+        const gutter = 80;
+        requestAnimationFrame(() => {
+            const { w: cw, h: ch } = getDesktopBounds();
+
+            setPositions((prev) => {
+                const desiredX = prev.profile.x + sizesRef.current.profile.w + gutter;
+
+                const maxX = Math.max(0, cw - sizesRef.current.paint.w);
+
+                const x = Math.min(desiredX, maxX);
+                
+                const desiredY = prev.paint?.y ?? DEFAULT_POSITIONS.paint.y;
+                return { ...prev, paint: { x, y: desiredY } };
+            });
         });
-        // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
-    // Responsive behavior: cap sizes & clamp positions when viewport changes
+    // Track compact breakpoint changes
+    useEffect(() => {
+        const mq = window.matchMedia('(max-width: 743px)');
+        const handler = (e) => setIsCompact(e.matches);
+        setIsCompact(mq.matches);
+        mq.addEventListener?.('change', handler);
+        return () => mq.removeEventListener?.('change', handler);
+    }, []);
+
     useEffect(() => {
         function computeCappedSize(id, s, vw, vh) {
-        // Leave some breathing room around windows so borders/handles remain visible
-        const padX = 200; // total horizontal padding
-        const padY = 180; // total vertical padding
-        const maxW = Math.max(MIN_SIZES[id].w, vw - padX);
-        const maxH = Math.max(MIN_SIZES[id].h, vh - padY);
-        return { w: Math.min(s.w, maxW), h: Math.min(s.h, maxH) };
+            const padX = 200; // total horizontal padding
+            const padY = 180; // total vertical padding
+            const maxW = Math.max(MIN_SIZES[id].w, vw - padX);
+            const maxH = Math.max(MIN_SIZES[id].h, vh - padY);
+            return { w: Math.min(s.w, maxW), h: Math.min(s.h, maxH) };
         }
 
         function onResize() {
-        const vw = window.innerWidth || 1440;
-        const vh = window.innerHeight || 900;
+            const { w: vw, h: vh } = getDesktopBounds();
 
-        // First, cap sizes so they don't exceed viewport
-        setSizes((prev) => {
-            const next = { ...prev };
-            for (const id of Object.keys(prev)) {
-            next[id] = computeCappedSize(id, prev[id], vw, vh);
-            }
-            return next;
-        });
+            // First, cap sizes so they don't exceed viewport
+            setSizes((prev) => {
+                const next = { ...prev };
+                for (const id of Object.keys(prev)) {
+                    next[id] = computeCappedSize(id, DEFAULT_SIZES[id], vw, vh);
+                }
+                return next;
+            });
 
-        // Then, clamp positions so windows stay fully visible
-        setPositions((prev) => {
-            const next = { ...prev };
-            for (const id of Object.keys(prev)) {
-            const s = computeCappedSize(id, sizesRef.current[id], vw, vh);
-            const maxX = Math.max(0, vw - s.w);
-            const maxY = Math.max(0, vh - s.h);
-            next[id] = {
-                x: clamp(prev[id].x, 0, maxX),
-                y: clamp(prev[id].y, 0, maxY),
-            };
-            }
-            return next;
-        });
+            setPositions((prev) => {
+                const next = { ...prev };
+                for (const id of Object.keys(prev)) {
+                    const s = computeCappedSize(id, sizesRef.current[id], vw, vh);
+                    const maxX = Math.max(0, vw - s.w);
+                    const maxY = Math.max(0, vh - s.h);
+                    next[id] = {
+                        x: clamp(prev[id].x, 0, maxX),
+                        y: clamp(prev[id].y, 0, maxY),
+                    };
+                }
+
+                const gutter = 80;
+                const profSize = computeCappedSize("profile", DEFAULT_SIZES.profile, vw, vh);
+                const paintSize = computeCappedSize("paint", DEFAULT_SIZES.paint, vw, vh);
+
+                const desiredX = next.profile.x + profSize.w + gutter;
+                const maxXForPaint = Math.max(0, vw - paintSize.w);
+                const x = Math.min(desiredX, maxXForPaint);
+
+                const currentPaintY = prev.paint?.y ?? DEFAULT_POSITIONS.paint.y;
+                const maxYPaint = Math.max(0, vh - paintSize.h);
+                next.paint = { x, y: clamp(currentPaintY, 0, maxYPaint) };
+
+                return next;
+            });
         }
 
-        // Run once and subscribe
         onResize();
         window.addEventListener("resize", onResize);
         return () => window.removeEventListener("resize", onResize);
     }, []);
 
-    return (
-        <div className="w-screen h-screen relative overflow-hidden font-mono text-sm">
-            <div className="absolute inset-0 bg-gradient-to-b from-[#bde0fe] via-[#cdb4db] to-[#ffc8dd]" />
-            <div className="absolute inset-0 p-6 grid grid-cols-[120px_1fr_120px] gap-4">
-                <div className="flex flex-col justify-between items-center py-6">
-                    <div className="flex flex-col gap-6">
-                        <ApplicationIcon label="Projects" onClick={() => reopen("projects")} icon={FileApp}/>
-                        <ApplicationIcon label="Sarah's Profile" onClick={() => reopen("profile")} icon={WorldApp}/>
+    // Compact layout: top icons row (Profile, Projects) with fullscreen content below
+    if (isCompact) {
+        return (
+            <div className="w-[100dvw] h-[100dvh] relative overflow-hidden font-mono text-sm">
+                <div className="absolute inset-0 bg-gradient-to-b from-[#bde0fe] via-[#cdb4db] to-[#ffc8dd]" />
+                <div className="absolute inset-0 p-4 pb-[calc(1rem+env(safe-area-inset-bottom))] flex flex-col gap-4">
+                    <div className="flex items-center justify-center gap-6">
+                        <ApplicationIcon label="Sarah's Profile" onClick={() => setCompactActive('profile')} icon={WorldApp} />
+                        <ApplicationIcon label="Projects" onClick={() => setCompactActive('projects')} icon={FileApp} />
                     </div>
-                    <div className="flex flex-col gap-6">
-                        <ApplicationIcon label="Sudoku" onClick={() => reopen("sudoku")} icon={ArcadeApp}/>
-                        <ApplicationIcon label="Profile pic" onClick={() => reopen("paint")} icon={ProfileApp} />
+                    <div className="flex-1 min-h-0 bg-white rounded-md overflow-auto">
+                        {compactActive === 'profile' && (
+                            <RetroWindow
+                                id="compact-profile"
+                                title={"Sarah's Profile - Internet"}
+                                isOpen={true}
+                                onClose={() => setCompactActive(null)}
+                                onFocus={() => {}}
+                                z={1}
+                                pos={{ x: 0, y: 0 }}
+                                setPos={() => {}}
+                                size={{ w: 0, h: 0 }}
+                                setSize={() => {}}
+                                minSize={{ w: 300, h: 300 }}
+                                hasToolbar={true}
+                                isCompact={true}
+                            >
+                                <InternetApplication />
+                            </RetroWindow>
+                        )}
+                        {compactActive === 'projects' && (
+                            <RetroWindow
+                                id="compact-projects"
+                                title={"C:\\Projects"}
+                                isOpen={true}
+                                onClose={() => setCompactActive(null)}
+                                onFocus={() => {}}
+                                z={1}
+                                pos={{ x: 0, y: 0 }}
+                                setPos={() => {}}
+                                size={{ w: 0, h: 0 }}
+                                setSize={() => {}}
+                                minSize={{ w: 300, h: 300 }}
+                                hasToolbar={false}
+                                isCompact={true}
+                            >
+                                <PersonalProjects />
+                            </RetroWindow>
+                        )}
                     </div>
                 </div>
-                <div className="relative">
+            </div>
+        );
+    }
+
+    return (
+        <div className="w-[100dvw] h-[100dvh] relative overflow-hidden font-mono text-sm">
+            <div className="absolute inset-0 bg-gradient-to-b from-[#bde0fe] via-[#cdb4db] to-[#ffc8dd]" />
+            <div className="absolute inset-0 p-6 pb-[calc(1.5rem+env(safe-area-inset-bottom))] grid grid-cols-[120px_1fr_120px] gap-4">
+                <div className="flex flex-col justify-between items-center py-6">
+                    <div className="flex flex-col gap-6">
+                        <ApplicationIcon label="Sarah's Profile" onClick={() => reopen("profile")} icon={WorldApp}/>
+                        <ApplicationIcon label="Profile pic" onClick={() => reopen("paint")} icon={ProfileApp} />
+                    </div>
+                    <div className="flex flex-col gap-6">
+                        <ApplicationIcon label="Projects" onClick={() => reopen("projects")} icon={FileApp}/>
+                        <ApplicationIcon label="Sudoku" onClick={() => reopen("sudoku")} icon={ArcadeApp}/>
+                    </div>
+                </div>
+                <div className="relative" ref={desktopAreaRef}>
                     <RetroWindow
                         id="profile"
                         title="Sarah's Profile • Internet"
@@ -154,6 +241,7 @@ export default function App() {
                         setSize={setSize}
                         minSize={MIN_SIZES.profile}
                         hasToolbar={true}
+                        isCompact={false}
                     >
                         <InternetApplication />
                     </RetroWindow>
@@ -171,6 +259,7 @@ export default function App() {
                         setSize={setSize}
                         minSize={MIN_SIZES.paint}
                         hasToolbar={false}
+                        isCompact={false}
                     >
                         <PaintApplication />
                     </RetroWindow>
@@ -188,6 +277,7 @@ export default function App() {
                         setSize={setSize}
                         minSize={MIN_SIZES.projects}
                         hasToolbar={false}
+                        isCompact={false}
                     >   
                         <PersonalProjects />
                     </RetroWindow>
@@ -205,6 +295,7 @@ export default function App() {
                             setSize={setSize}
                             minSize={MIN_SIZES.sudoku}
                             hasToolbar={false}
+                            isCompact={false}
                         >
                             <Suspense fallback={<div className="p-4 text-sm">Loading…</div>}>
                                 <Sudoku key={sudokuVersion} />
